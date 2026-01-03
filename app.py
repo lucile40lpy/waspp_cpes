@@ -1,4 +1,5 @@
 from flask import Flask, render_template, send_from_directory
+import os
 
 app = Flask(__name__)
 
@@ -22,7 +23,9 @@ def home():
 
 @app.route('/take_test')
 def take_test():
-    return render_template('stuteapot_test.html')
+    # Fetch the secret URL from Render environment variables
+    sheet_api_url = os.environ.get("SHEET_API_URL")
+    return render_template('stuteapot_test.html', sheet_api_url=sheet_api_url)
 
 @app.route('/results')
 def results():

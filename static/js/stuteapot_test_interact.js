@@ -1,13 +1,16 @@
 "use strict";
 
 // ============================================================================
-// 1. GOOGLE SHEET LINK
+// 1. CONFIGURATION
 // ============================================================================
 
-// TODO: Replace this URL
-const SHEET_API_URL =
-  "https://script.google.com/macros/s/AKfycbxvx40m1C11wEui7LLTJ4OJo4ioAHy3DjGt5anVMrlCC3W5RIvTgO5V-N7bqzSRRSQ/exec";
-
+function getSheetApiUrl() {
+  if (window.flaskUrls && window.flaskUrls.sheetApiUrl) {
+    return window.flaskUrls.sheetApiUrl;
+  }
+  console.error("SHEET_API_URL not found in configuration!");
+  return "";
+}
 // ============================================================================
 // 2. INITIALIZATION
 // ============================================================================
@@ -48,9 +51,17 @@ async function sendToSheet(data) {
     form.append(key, data[key]);
   }
 
+  // Get the URL dynamically here
+  const apiUrl = getSheetApiUrl();
+
+  if (!apiUrl) {
+    alert("Configuration Error: API URL missing.");
+    return false;
+  }
+
   try {
-    // Send data to Google Sheets
-    await fetch(SHEET_API_URL, {
+    // Use the dynamic variable 'apiUrl' instead of the constant
+    await fetch(apiUrl, {
       method: "POST",
       body: form,
     });
