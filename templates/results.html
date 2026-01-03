@@ -3,12 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WASPP - Results</title>
+    <title>Waspp - Results</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
     <script src="{{ url_for('static', filename='node_modules/d3/dist/d3.js') }}"></script>
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='css/style.css') }}"
-    />
+      href="{{ url_for('static', filename='css/style.css') }}">
     <script src="{{ url_for('static', filename='js/results_interact.js') }}"></script>
     <script>
       window.flaskUrls = {
@@ -26,15 +26,27 @@
         <p class="subtitle">What Are Student's Pedagogical Preferences?</p>
       </div>
 
-      <div id="dropdown-container">
-        <div id="dropdown-trigger">
-          <span id="menu-label">MENU</span>
-          <span class="dropdown-icon">▼</span>
-        </div>
+      <div class="header-actions">
+        <a href="{{ url_for('take_test') }}" class="header-cta">Start Test</a>
 
-        <div id="dropdown-menu" class="hidden">
-          <a href="{{ url_for('home') }}" class="menu-item">Home</a>
-          <a href="{{ url_for('take_test') }}" class="menu-item">Take Test</a>
+        <div id="dropdown-container">
+          <div id="dropdown-trigger">
+            <span id="menu-label">MENU</span>
+            <span class="dropdown-icon">▼</span>
+          </div>
+      
+          <div id="dropdown-menu" class="hidden">
+            <a href="{{ url_for('home') }}" class="menu-item menu-category">HOME</a>
+        
+            <a href="{{ url_for('home') }}#discover-WASPP" class="menu-sub-item">Discover</a>
+            <a href="{{ url_for('home') }}#take-test" class="menu-sub-item">Test Section</a>
+            <a href="{{ url_for('home') }}#research-ground" class="menu-sub-item">Research</a>
+            <a href="{{ url_for('home') }}#about-project" class="menu-sub-item">About</a>
+
+            <a href="{{ url_for('take_test') }}" class="menu-item menu-category">TEST PAGE</a>
+
+            <a href="{{ url_for('results') }}" class="menu-item menu-category">RESULTS PAGE</a>
+          </div>
         </div>
       </div>
     </header>

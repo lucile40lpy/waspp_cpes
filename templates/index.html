@@ -3,8 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WASPP</title>
-
+    <title>Waspp - Home</title>
+    <link
+      rel="icon"
+      type="image/png"
+      href="{{ url_for('static', filename='images/favicon.png') }}"
+    />
     <script src="{{ url_for('static', filename='node_modules/d3/dist/d3.js') }}"></script>
     <script
       type="module"
@@ -28,29 +32,55 @@
     <header class="site-header">
       <div class="header-branding">
         <h1 class="main-title">WASPP</h1>
-        <p class="subtitle">
-          What Are CPPESMD Student's Pedagogical Preferences?
-        </p>
+        <p class="subtitle">What Are Student's Pedagogical Preferences?</p>
       </div>
 
-      <div id="dropdown-container">
-        <div id="dropdown-trigger">
-          <span id="menu-label">MENU</span>
-          <span class="dropdown-icon">▼</span>
-        </div>
+      <div class="header-actions">
+        <a href="{{ url_for('take_test') }}" class="header-cta">Start Test</a>
 
-        <div id="dropdown-menu" class="hidden">
-          <div class="menu-item" onclick="scrollToSection('discover-WASPP')">
-            <span>Discover</span>
+        <div id="dropdown-container">
+          <div id="dropdown-trigger">
+            <span id="menu-label">MENU</span>
+            <span class="dropdown-icon">▼</span>
           </div>
-          <div class="menu-item" onclick="scrollToSection('take-test')">
-            <span>Start Test</span>
-          </div>
-          <div class="menu-item" onclick="scrollToSection('research-ground')">
-            <span>Research</span>
-          </div>
-          <div class="menu-item" onclick="scrollToSection('about-project')">
-            <span>About</span>
+
+          <div id="dropdown-menu" class="hidden">
+            <div
+              class="menu-item menu-category"
+              onclick="scrollToSection('landing')"
+            >
+              HOME
+            </div>
+
+            <div
+              class="menu-sub-item"
+              onclick="scrollToSection('discover-WASPP')"
+            >
+              Discover
+            </div>
+            <div class="menu-sub-item" onclick="scrollToSection('take-test')">
+              Test Section
+            </div>
+            <div
+              class="menu-sub-item"
+              onclick="scrollToSection('research-ground')"
+            >
+              Research
+            </div>
+            <div
+              class="menu-sub-item"
+              onclick="scrollToSection('about-project')"
+            >
+              About
+            </div>
+
+            <a href="{{ url_for('take_test') }}" class="menu-item menu-category"
+              >TEST PAGE</a
+            >
+
+            <a href="{{ url_for('results') }}" class="menu-item menu-category"
+              >RESULTS PAGE</a
+            >
           </div>
         </div>
       </div>
@@ -136,6 +166,12 @@
               </a>
             </li>
           </ul>
+        </div>
+        <div class="credits">
+          <p>Credits</p>
+          <a href="https://www.flaticon.com/free-icons/wasp" title="wasp icons"
+            >Wasp icons created by Georgiana_Lavinia - Flaticon</a
+          >
         </div>
       </div>
     </footer>

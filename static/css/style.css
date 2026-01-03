@@ -51,8 +51,30 @@ body {
 }
 
 /* =========================================
-   HEADER BANNER (New)
+   HEADER BANNER
    ========================================= */
+/* Indented sub-items in the menu */
+.menu-sub-item {
+  padding: 10px 20px 10px 40px; /* 40px left padding creates indentation */
+  font-size: 0.9rem;
+  color: var(--text-light);
+  cursor: pointer;
+  display: block; /* Ensures anchor tags fill the width */
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.menu-sub-item:hover {
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
+}
+
+/* Bold the main categories */
+.menu-category {
+  font-weight: 600;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* Optional separator */
+}
+
 .site-header {
   width: 100%;
   padding: 15px 40px; /* Slim banner padding */
@@ -88,6 +110,33 @@ a.menu-item {
   color: var(--text-dark);
 }
 
+/* Wrapper to align Button + Menu */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Space between Start button and Menu */
+}
+
+/* "Start Test" Button Style in Header */
+.header-cta {
+  display: inline-block;
+  padding: 8px 20px;
+  background-color: var(--primary-dark);
+  color: white;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+  border: 1px solid var(--primary-dark);
+  white-space: nowrap; /* Prevents text from wrapping */
+}
+
+.header-cta:hover {
+  background-color: transparent;
+  color: var(--primary-dark);
+}
+
 /* Responsive adjustments for mobile */
 @media (max-width: 768px) {
   .site-header {
@@ -100,10 +149,14 @@ a.menu-item {
     flex-direction: column;
     gap: 5px;
   }
+  .header-actions {
+    align-self: flex-end;
+    margin-top: -10px;
+  }
   #dropdown-container {
     align-self: flex-end;
     margin-top: -40px;
-  } /* Adjust menu on mobile */
+  }
 }
 
 /* =========================================
