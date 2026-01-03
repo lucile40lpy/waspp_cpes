@@ -1,19 +1,25 @@
-/* mypage_style.css - Full Width Section Design */
+/* mypage_style.css - Updated for Banner Header */
 
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap");
 
+/* Base Reset */
 h1,
 h2,
 h3,
 h4 {
   font-family: "Playfair Display", serif;
   font-weight: 500;
+  margin: 0;
 }
 h5,
 h6 {
   font-family: "Inter", sans-serif;
   font-weight: 400;
+  margin: 0;
+}
+p {
+  margin: 0;
 }
 
 :root {
@@ -24,18 +30,16 @@ h6 {
   --text-dark: #1c1b1a;
   --text-light: #5c564f;
 
-  /* SECTION BACKGROUND PALETTE */
-  --bg-cream: #eadacb; /* Warm Cream */
-  --bg-purple: #cabfe3; /* Muted Lavender */
-  --bg-green: #bde1b4; /* Soft Sage */
+  /* Backgrounds */
+  --bg-cream: #eadacb;
+  --bg-purple: #cabfe3;
+  --bg-green: #bde1b4;
+  --card-bg: #ffffff;
 
-  /* Components */
-  --card-bg: #ffffff; /* For inputs/matrix */
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --border-radius: 0px; /* Square aesthetics */
+  --border-radius: 0px;
 }
 
-/* Base Setup */
 html,
 body {
   margin: 0;
@@ -47,27 +51,72 @@ body {
 }
 
 /* =========================================
-   FULL WIDTH LAYOUT ARCHITECTURE
+   HEADER BANNER (New)
    ========================================= */
-
-/* This replaces the old .container logic */
-.full-width-section {
+.site-header {
   width: 100%;
-  padding: 80px 20px; /* Vertical breathing room */
-  margin: 0;
+  padding: 15px 40px; /* Slim banner padding */
   box-sizing: border-box;
   display: flex;
-  justify-content: center; /* Centers the inner content */
+  justify-content: space-between; /* Pushes content to edges */
+  align-items: center; /* Vertically aligns title, subtitle, and menu */
+  background-color: var(--bg-cream);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-/* The inner wrapper restricts text width for readability */
+.header-branding {
+  display: flex;
+  align-items: baseline; /* Aligns text on the baseline */
+  gap: 20px; /* Space between WASPP and Subtitle */
+}
+
+.header-branding h1 {
+  font-size: 1.8rem;
+  color: var(--text-dark);
+  letter-spacing: 1px;
+}
+
+.header-branding .subtitle {
+  font-size: 1rem;
+  color: var(--text-light);
+  font-family: "Inter", sans-serif;
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+  .site-header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    align-items: flex-start;
+  }
+  .header-branding {
+    flex-direction: column;
+    gap: 5px;
+  }
+  #dropdown-container {
+    align-self: flex-end;
+    margin-top: -40px;
+  } /* Adjust menu on mobile */
+}
+
+/* =========================================
+   SECTIONS
+   ========================================= */
+.full-width-section {
+  width: 100%;
+  padding: 80px 20px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+}
+
 .section-content {
   width: 100%;
-  max-width: 900px; /* Optimal reading width */
+  max-width: 900px;
   margin: 0 auto;
 }
 
-/* Color Variants */
 .bg-cream {
   background-color: var(--bg-cream);
 }
@@ -78,251 +127,26 @@ body {
   background-color: var(--bg-green);
 }
 
-/* Typography improvements for sections */
 .section-content h2 {
   font-size: 2.2rem;
   margin-bottom: 10px;
   color: var(--primary-dark);
 }
-
 .section-content p.intro-text {
   font-size: 1.1rem;
   color: var(--text-light);
   margin-bottom: 40px;
 }
-
-/* =========================================
-   INPUTS & FORMS
-   ========================================= */
-
-.question {
-  margin-bottom: 50px;
-  /* No borders between questions anymore, the space is enough */
-}
-
-.question h3 {
-  font-size: 1.3rem;
-  margin-bottom: 15px;
-}
-
-.options {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-/* Clean Option Wrapper */
-.option {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  cursor: pointer;
-}
-
-.option input[type="radio"] {
-  width: 20px;
-  height: 20px;
-  accent-color: var(--primary-dark);
-  cursor: pointer;
-}
-
-/* Unified Input Styles (White boxes on colored background) */
-.option input[type="text"],
-.option input[type="number"],
-.option select,
-.option textarea {
-  width: 100%;
-  max-width: 100%; /* Fill the wrapper */
-  padding: 16px;
-  font-family: "Inter", sans-serif;
-  font-size: 1rem;
-  color: var(--text-dark);
-
-  background-color: var(--card-bg); /* White box pops on color bg */
-  border: 1px solid rgba(0, 0, 0, 0.08); /* Very subtle border */
-  border-radius: var(--border-radius);
-
-  appearance: none;
-  -webkit-appearance: none;
-  transition: var(--transition);
-}
-
-/* Input Focus */
-.option input:focus,
-.option select:focus,
-.option textarea:focus {
-  outline: none;
-  border-color: var(--primary-dark);
-  box-shadow: 0 0 0 4px rgba(76, 40, 46, 0.1);
-}
-
-/* Custom Dropdown Arrow */
-.option select {
-  cursor: pointer;
-  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%231c1b1a%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
-  background-repeat: no-repeat;
-  background-position: right 1rem center;
-  background-size: 0.8rem auto;
+.section-content p {
+  margin-bottom: 1rem;
 }
 
 /* =========================================
-   LIKERT MATRIX (White Card Style)
-   ========================================= */
-
-.likert-matrix {
-  display: grid;
-  grid-template-columns: minmax(300px, 40%) repeat(5, 1fr);
-  column-gap: 1px;
-  row-gap: 1px;
-  align-items: stretch;
-  margin-top: 30px;
-
-  /* Matrix remains white to stand out against colored sections */
-  background-color: rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-}
-
-.likert-header-label,
-.likert-header-empty,
-.likert-statement,
-.likert-choice {
-  background-color: #ffffff; /* Cells are white */
-}
-
-.likert-header {
-  display: contents;
-  font-weight: 600;
-  color: var(--primary-dark);
-}
-
-.likert-header-label {
-  padding: 20px 5px;
-  text-align: center;
-  font-size: 0.9rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.likert-row {
-  display: contents;
-}
-
-.likert-statement {
-  padding: 20px;
-  font-size: 1.05rem;
-  font-weight: 500;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.likert-choice {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.likert-choice:hover {
-  background-color: rgba(76, 40, 46, 0.15);
-}
-.likert-choice:has(input:checked) {
-  background-color: rgba(76, 40, 46, 0.25);
-}
-
-.likert-choice input[type="radio"] {
-  margin: 0;
-}
-
-.matrix-error {
-  color: #ff6b6b;
-  font-size: 0.85rem;
-  margin-top: 5px;
-  display: none;
-}
-
-.likert-row-error .likert-statement,
-.likert-row-error .likert-choice {
-  background-color: rgba(255, 107, 107, 0.1);
-}
-
-/* =========================================
-   BUTTONS & FOOTER
-   ========================================= */
-
-.test-navigation {
-  padding-bottom: 0;
-}
-
-.nav-button {
-  padding: 18px 50px;
-  background-color: var(--primary-dark);
-  color: white;
-  border: none;
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: var(--transition);
-  margin-top: 20px;
-}
-
-.nav-button:hover {
-  background-color: var(--primary-color);
-  transform: translateY(-2px);
-}
-
-@media (max-width: 850px) {
-  .likert-matrix {
-    display: block;
-    border: none;
-    background-color: transparent;
-  }
-  .likert-header {
-    display: none;
-  }
-
-  .likert-row {
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    margin-bottom: 20px;
-    padding: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  }
-
-  .likert-statement,
-  .likert-choice {
-    border: none;
-    padding: 5px 0;
-  }
-  .likert-choice {
-    justify-content: flex-start;
-    padding: 10px 0;
-  }
-  .likert-choice::after {
-    content: attr(data-label);
-    margin-left: 10px;
-    color: var(--text-light);
-  }
-
-  .full-width-section {
-    padding: 40px 15px;
-  }
-}
-
-/* =========================================
-   DROPDOWN MENU STYLES (Restore)
+   MENU (Updated for Header Placement)
    ========================================= */
 #dropdown-container {
-  position: fixed;
-  top: 30px;
-  right: 40px;
+  position: relative; /* Now flows inside the header */
   z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
 }
 
 #dropdown-trigger {
@@ -330,8 +154,8 @@ body {
   align-items: center;
   gap: 10px;
   cursor: pointer;
-  background-color: var(--card-bg);
-  padding: 10px 20px;
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 8px 16px;
   border-radius: var(--border-radius);
   border: 1px solid rgba(0, 0, 0, 0.1);
   transition: var(--transition);
@@ -340,31 +164,28 @@ body {
 #dropdown-trigger:hover {
   background-color: var(--primary-light);
 }
-
 #menu-label {
   font-weight: 600;
   font-size: 0.9rem;
   letter-spacing: 1px;
 }
-
 .dropdown-icon {
   font-size: 0.8rem;
 }
 
 #dropdown-menu {
   position: absolute;
-  top: 100%;
+  top: 120%; /* Pushes it just below the button */
   right: 0;
-  margin-top: 10px;
   background-color: var(--card-bg);
   border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: var(--border-radius);
   min-width: 180px;
-  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+  /* Animation */
   opacity: 1;
   transform: translateY(0);
   transition: var(--transition);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 #dropdown-menu.hidden {
@@ -379,8 +200,176 @@ body {
   transition: background-color 0.2s;
   font-size: 0.95rem;
 }
-
 .menu-item:hover {
   background-color: var(--primary-light);
   color: var(--primary-dark);
+}
+
+/* =========================================
+   INPUTS, FORMS & MATRIX (Unchanged)
+   ========================================= */
+.question {
+  margin-bottom: 50px;
+}
+.question h3 {
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+}
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.option {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  cursor: pointer;
+}
+.option input[type="radio"] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--primary-dark);
+  cursor: pointer;
+}
+
+.option input[type="text"],
+.option input[type="number"],
+.option select,
+.option textarea {
+  width: 100%;
+  max-width: 100%;
+  padding: 16px;
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  color: var(--text-dark);
+  background-color: var(--card-bg);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: var(--border-radius);
+  appearance: none;
+  -webkit-appearance: none;
+  transition: var(--transition);
+}
+.option input:focus,
+.option select:focus,
+.option textarea:focus {
+  outline: none;
+  border-color: var(--primary-dark);
+  box-shadow: 0 0 0 4px rgba(76, 40, 46, 0.1);
+}
+
+.likert-matrix {
+  display: grid;
+  grid-template-columns: minmax(300px, 40%) repeat(5, 1fr);
+  column-gap: 1px;
+  row-gap: 1px;
+  align-items: stretch;
+  margin-top: 30px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+.likert-header-label,
+.likert-header-empty,
+.likert-statement,
+.likert-choice {
+  background-color: #ffffff;
+}
+.likert-header {
+  display: contents;
+  font-weight: 600;
+  color: var(--primary-dark);
+}
+.likert-header-label {
+  padding: 20px 5px;
+  text-align: center;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.likert-row {
+  display: contents;
+}
+.likert-statement {
+  padding: 20px;
+  font-size: 1.05rem;
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.likert-choice {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.likert-choice:hover {
+  background-color: rgba(76, 40, 46, 0.15);
+}
+.likert-choice:has(input:checked) {
+  background-color: rgba(76, 40, 46, 0.25);
+}
+.likert-choice input[type="radio"] {
+  margin: 0;
+}
+.matrix-error {
+  color: #ff6b6b;
+  font-size: 0.85rem;
+  margin-top: 5px;
+  display: none;
+}
+.likert-row-error .likert-statement,
+.likert-row-error .likert-choice {
+  background-color: rgba(255, 107, 107, 0.1);
+}
+
+.nav-button {
+  padding: 18px 50px;
+  background-color: var(--primary-dark);
+  color: white;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: var(--transition);
+  margin-top: 20px;
+}
+.nav-button:hover {
+  background-color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 850px) {
+  .likert-matrix {
+    display: block;
+    border: none;
+    background-color: transparent;
+  }
+  .likert-header {
+    display: none;
+  }
+  .likert-row {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    margin-bottom: 20px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  }
+  .likert-statement,
+  .likert-choice {
+    border: none;
+    padding: 5px 0;
+  }
+  .likert-choice {
+    justify-content: flex-start;
+    padding: 10px 0;
+  }
+  .likert-choice::after {
+    content: attr(data-label);
+    margin-left: 10px;
+    color: var(--text-light);
+  }
 }

@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>WASPP</title>
+
     <script src="{{ url_for('static', filename='node_modules/d3/dist/d3.js') }}"></script>
     <script
       type="module"
@@ -13,8 +14,8 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css') }}"
     />
+
     <script>
-      // Pass Flask URLs to JavaScript
       window.flaskUrls = {
         home: "{{ url_for('home') }}",
         take_test: "{{ url_for('take_test') }}",
@@ -24,84 +25,116 @@
   </head>
 
   <body>
-    <header class="full-width-section bg-cream" id="landing">
-      <h1 class="main-title">WASPP</h1>
-      <p class="subtitle">What Are Student's Pedagogical Preferences?</p>
-    </header>
+    <header id="landing" class="full-width-section bg-cream">
+      <nav class="main-navigation"></nav>
+        <h1 class="main-title">WASPP</h1>
+        <p class="subtitle">What Are Student's Pedagogical Preferences?</p>
 
-    <div class="full-width-section bg-purple" id="main-content">
-      <div class="section-content" id="discover-WASPP">
-        <h1>DISCOVER WASPP</h1>
-        <p>This section will be completed soon.</p>
       </div>
-    </div>
-
-    <div class="full-width-section bg-green" id="take-test">
-      <div class="section-content">
-        <h1>TAKE THE WASPP TEST</h1>
-        <p>Contribute to a research project.</p>
-        <p>
-          <strong>Note:</strong> The test is currently in development phase.
-        </p>
-        <div class="test-button-container">
-          <a href="{{ url_for('take_test') }}" class="test-button">
-            START TEST
-          </a>
+      <div id="dropdown-container">
+        <div id="dropdown-trigger">
+          <span id="menu-label">MENU</span>
+          <span class="dropdown-icon">▼</span>
+        </div>
+        <div id="dropdown-menu" class="hidden">
+          <div class="menu-item" onclick="scrollToSection('discover-WASPP')">
+            <span>Discover</span>
+          </div>
+          <div class="menu-item" onclick="scrollToSection('take-test')">
+            <span>Start Test</span>
+          </div>
+          <div class="menu-item" onclick="scrollToSection('research-ground')">
+            <span>Research</span>
+          </div>
+          <div class="menu-item" onclick="scrollToSection('about-project')">
+            <span>About</span>
+          </div>
         </div>
       </div>
-    </div>
+    </header>
 
-    <div class="full-width-section bg-cream" id="research-ground">
-      <div class="section-content">
-        <h1>RESEARCH GROUND</h1>
-        <p>This section will be completed soon.</p>
-      </div>
-    </div>
+    <main id="main-content">
+      <section id="discover-WASPP" class="full-width-section bg-purple">
+        <div class="section-content">
+          <h1>DISCOVER WASPP</h1>
+          <p>This section will be completed soon.</p>
+        </div>
+      </section>
 
-    <div class="full-width-section bg-purple" id="about-project">
-      <div class="section-content">
-        <h1>ABOUT THE PROJECT</h1>
-        <p>
-          I'm a student at PSL University and Louis-le-Grand, currently studying
-          in the CPES 3 program focused on Data, Arts and Culture. WASPP is a
-          project I'm working on for the class "Supervised research project".
-        </p>
-      </div>
-    </div>
+      <section id="take-test" class="full-width-section bg-green">
+        <div class="section-content">
+          <h1>TAKE THE WASPP TEST</h1>
+          <p>Contribute to a research project.</p>
+          <p>
+            <strong>Note:</strong> The test is currently in development phase.
+          </p>
+          <div class="test-button-container">
+            <a href="{{ url_for('take_test') }}" class="test-button"
+              >START TEST</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <section id="research-ground" class="full-width-section bg-cream">
+        <div class="section-content">
+          <h1>RESEARCH GROUND</h1>
+          <p>This section will be completed soon.</p>
+        </div>
+      </section>
+
+      <section id="about-project" class="full-width-section bg-purple">
+        <div class="section-content">
+          <h1>ABOUT THE PROJECT</h1>
+          <p>
+            I'm a student at PSL University and Louis-le-Grand, currently
+            studying in the CPES 3 program focused on Data, Arts and Culture.
+            WASPP is a project I'm working on for the class "Supervised research
+            project".
+          </p>
+        </div>
+      </section>
+    </main>
 
     <footer>
-      <p>Lucile Lapray</p>
-      <p>Student at PSL university & Louis-le-Grand.</p>
-      <p>CPES 3 - Data, arts and culture</p>
-      <br />
-      <p class="find-me">Find me:</p>
-      <ul>
-        <li>
-          <a href="#" class="email-link" data-email="lucile.lapray@psl.eu"
-            >lucile.lapray[at]psl.eu</a
-          >
-        </li>
-        <li>
-          <a class="cool-link" href="https://www.kaggle.com/lucilelpy"
-            >Kaggle</a
-          >
-        </li>
-        <li>
-          <a
-            class="cool-link"
-            href="https://www.linkedin.com/in/lucile-lapray-157b14330"
-            >LinkedIn</a
-          >
-        </li>
-        <li>
-          <a
-            class="cool-link"
-            href="https://api.unibuddy.co/og/psl/buddies/students/667530f2ee08bb06c797b597?buddyPosition=share"
-            >Unibuddy</a
-          >
-        </li>
-      </ul>
-      <br />
+      <div class="footer-content">
+        <p>
+          <strong>Lucile Lapray</strong><br />
+          Student at PSL university & Louis-le-Grand.<br />
+          CPES 3 - Data, arts and culture
+        </p>
+
+        <div class="contact-links">
+          <p class="find-me">Find me:</p>
+          <ul>
+            <li>
+              <a href="#" class="email-link" data-email="lucile.lapray@psl.eu">
+                lucile.lapray[at]psl.eu
+              </a>
+            </li>
+            <li>
+              <a class="cool-link" href="https://www.kaggle.com/lucilelpy"
+                >Kaggle</a
+              >
+            </li>
+            <li>
+              <a
+                class="cool-link"
+                href="https://www.linkedin.com/in/lucile-lapray-157b14330"
+                >LinkedIn</a
+              >
+            </li>
+            <li>
+              <a
+                class="cool-link"
+                href="https://api.unibuddy.co/og/psl/buddies/students/667530f2ee08bb06c797b597?buddyPosition=share"
+              >
+                Unibuddy
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </footer>
   </body>
 </html>

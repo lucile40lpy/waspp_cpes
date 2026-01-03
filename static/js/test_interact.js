@@ -4,6 +4,7 @@
 // 1. CONFIGURATION
 // ============================================================================
 
+// Function to get the API URL dynamically from the window object (passed from Flask)
 function getSheetApiUrl() {
   if (window.flaskUrls && window.flaskUrls.sheetApiUrl) {
     return window.flaskUrls.sheetApiUrl;
@@ -11,6 +12,7 @@ function getSheetApiUrl() {
   console.error("SHEET_API_URL not found in configuration!");
   return "";
 }
+
 // ============================================================================
 // 2. INITIALIZATION
 // ============================================================================
@@ -56,11 +58,15 @@ async function sendToSheet(data) {
 
   if (!apiUrl) {
     alert("Configuration Error: API URL missing.");
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalBtnText;
+    }
     return false;
   }
 
   try {
-    // Use the dynamic variable 'apiUrl' instead of the constant
+    // Send data to Google Sheets
     await fetch(apiUrl, {
       method: "POST",
       body: form,
