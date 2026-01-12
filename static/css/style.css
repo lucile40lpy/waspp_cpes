@@ -27,8 +27,8 @@ p {
   --primary-color: #da9b93;
   --primary-dark: #4e2924;
   --primary-light: #f2cbc6;
-  --text-dark: #1c1a1a;
-  --text-light: #5c4f4f;
+  --text-dark: #0b0a0a;
+  --text-light: #2d2626;
 
   /* Backgrounds */
   --bg-cream: #a7c957;
@@ -232,6 +232,19 @@ a.menu-item {
 }
 .section-content p {
   margin-bottom: 1rem;
+}
+
+.section-content a {
+  padding: 8px 12px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  transition: var(--transition);
+}
+
+.section-content a:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  color: var(--primary-color);
 }
 
 /* =========================================
@@ -560,7 +573,7 @@ footer a {
 footer a:hover {
   background-color: rgba(255, 255, 255, 0.5);
   text-decoration: none;
-  color: var(--primary-dark);
+  color: var(--primary-color);
 }
 
 .cool-link {
@@ -574,7 +587,7 @@ footer a:hover {
 }
 
 .cool-link:hover {
-  background-color: var(--primary-dark);
+  background-color: var(--primary-color);
   color: var(--background-light);
 }
 
@@ -590,7 +603,7 @@ footer a:hover {
 }
 
 .email-link:hover {
-  background-color: var(--primary-dark);
+  background-color: var(--primary-color);
   color: var(--background-light);
   text-decoration: none;
 }
