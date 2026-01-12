@@ -102,14 +102,50 @@
       <section id="take-test" class="full-width-section bg-green">
         <div class="section-content">
           <h1>TAKE THE WASPP TEST</h1>
-          <p>Contribute to a research project.</p>
+
           <p>
-            <strong>Note:</strong> The test is currently in development phase.
+            This research project explores the link between student profiles and
+            their preferences for different pedagogical aspects. We are driven
+            by curiosity to understand the specific dynamics within the
+            <strong>CPES & SMD</strong> context.
           </p>
-          <div class="test-button-container">
-            <a href="{{ url_for('take_test') }}" class="test-button"
-              >START TEST</a
+
+          <p style="margin-top: 20px">
+            The questionnaire covers four main dimensions of your student life:
+          </p>
+          <ul
+            style="
+              list-style-type: none;
+              padding: 0;
+              margin-bottom: 25px;
+              font-weight: 500;
+            "
+          >
+            <li>• Socio-demographic profile</li>
+            <li>• Academic behaviors</li>
+            <li>• Personal motivations</li>
+            <li>• Pedagogical preferences</li>
+          </ul>
+
+          <p
+            style="
+              font-size: 0.95rem;
+              color: var(--text-light);
+              margin-bottom: 30px;
+            "
+          >
+            <em
+              >Note: All answers are <strong>anonymous</strong>. The questions
+              are <strong>varied</strong> to capture a holistic view, but
+              nothing is mandatory: participation is entirely
+              <strong>optional</strong>.</em
             >
+          </p>
+
+          <div class="test-button-container">
+            <a href="{{ url_for('take_test') }}" class="test-button">
+              START TEST
+            </a>
           </div>
         </div>
       </section>
