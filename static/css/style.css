@@ -76,14 +76,25 @@ body {
 }
 
 .site-header {
+  position: fixed; /* Locks header to the viewport */
+  top: 0;
+  left: 0;
   width: 100%;
-  padding: 15px 40px; /* Slim banner padding */
+  padding: 15px 40px;
   box-sizing: border-box;
   display: flex;
-  justify-content: space-between; /* Pushes content to edges */
-  align-items: center; /* Vertically aligns title, subtitle, and menu */
-  background-color: var(--bg-cream);
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(
+    --bg-cream
+  ); /* Ensure BG is opaque so content hides behind it */
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  z-index: 1000; /* Keeps it on top of everything */
+}
+
+/* Push page content down so it's not hidden behind the fixed header */
+body {
+  padding-top: 80px;
 }
 
 .header-branding {
