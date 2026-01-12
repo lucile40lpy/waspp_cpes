@@ -24,16 +24,16 @@ p {
 
 :root {
   /* Brand Colors */
-  --primary-color: #eca4a5;
-  --primary-dark: #4c282e;
-  --primary-light: #e8cccc;
-  --text-dark: #1c1b1a;
-  --text-light: #5c564f;
+  --primary-color: #da9b93;
+  --primary-dark: #4e2924;
+  --primary-light: #f2cbc6;
+  --text-dark: #1c1a1a;
+  --text-light: #5c4f4f;
 
   /* Backgrounds */
-  --bg-cream: #eadacb;
-  --bg-purple: #cabfe3;
-  --bg-green: #bde1b4;
+  --bg-cream: #f4f1bb;
+  --bg-purple: #ed6a5a;
+  --bg-green: #9bc1bc;
   --card-bg: #ffffff;
 
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
