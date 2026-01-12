@@ -79,6 +79,10 @@ function generateAllCharts(data) {
     { key: "correction", title: "Asked to correct mistakes after evaluation" },
     { key: "interaction", title: "Interact with other students" },
     { key: "group-work", title: "Work in groups" },
+    {
+      key: "workload",
+      title: "My ability to produce quality work is hindered by my workload.",
+    },
   ];
 
   variables.forEach((v) => {

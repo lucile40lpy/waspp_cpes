@@ -237,6 +237,7 @@ function validateAll() {
     validateRequiredRadio("cheating", "cheating-error"),
     validateRequiredRadio("interest", "interest-error"),
     validateRequiredRadio("performance", "performance-error"),
+    validateRequiredRadio("workload", "workload-error"),
 
     // --- Matrix 2 (Personal Motivations) ---
     validateRequiredRadio("curiosity", "curiosity-error"),
