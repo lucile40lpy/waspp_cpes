@@ -31,9 +31,9 @@ p {
   --text-light: #5c4f4f;
 
   /* Backgrounds */
-  --bg-cream: #f4f1bb;
-  --bg-purple: #ed6a5a;
-  --bg-green: #9bc1bc;
+  --bg-cream: #a7c957;
+  --bg-purple: #6a994e;
+  --bg-green: #386641;
   --card-bg: #ffffff;
 
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
