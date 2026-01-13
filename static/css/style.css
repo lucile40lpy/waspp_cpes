@@ -1,4 +1,4 @@
-/* mypage_style.css - Corrected Chart Layouts */
+/* mypage_style.css - 5 Charts Per Row Everywhere */
 
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap");
@@ -53,28 +53,6 @@ body {
 /* =========================================
    HEADER BANNER
    ========================================= */
-/* Indented sub-items in the menu */
-.menu-sub-item {
-  padding: 10px 20px 10px 40px;
-  font-size: 0.9rem;
-  color: var(--text-light);
-  cursor: pointer;
-  display: block;
-  text-decoration: none;
-  transition: background-color 0.2s;
-}
-
-.menu-sub-item:hover {
-  background-color: var(--primary-light);
-  color: var(--primary-dark);
-}
-
-/* Bold the main categories */
-.menu-category {
-  font-weight: 600;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-}
-
 .site-header {
   position: fixed;
   top: 0;
@@ -90,7 +68,6 @@ body {
   z-index: 1000;
 }
 
-/* Push page content down so it's not hidden behind the fixed header */
 body {
   padding-top: 80px;
 }
@@ -100,54 +77,34 @@ body {
   align-items: center;
   gap: 15px;
 }
-
 .header-icon {
   height: 40px;
   width: auto;
 }
-
 .header-text {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-
 .header-text h1 {
   line-height: 1;
   margin-bottom: 2px;
-}
-
-.header-text .subtitle {
-  font-size: 0.85rem;
-  color: var(--text-light);
-}
-
-.header-branding h1 {
   font-size: 1.8rem;
   color: var(--text-dark);
   letter-spacing: 1px;
 }
-
-.header-branding .subtitle {
-  font-size: 1rem;
+.header-text .subtitle {
+  font-size: 0.85rem; /* Smaller font for subtitle */
   color: var(--text-light);
   font-family: "Inter", sans-serif;
 }
 
-a.menu-item {
-  display: block;
-  text-decoration: none;
-  color: var(--text-dark);
-}
-
-/* Wrapper to align Button + Menu */
 .header-actions {
   display: flex;
   align-items: center;
   gap: 15px;
 }
 
-/* "Start Test" Button Style in Header */
 .header-cta {
   display: inline-block;
   padding: 8px 20px;
@@ -161,32 +118,9 @@ a.menu-item {
   border: 1px solid var(--primary-dark);
   white-space: nowrap;
 }
-
 .header-cta:hover {
   background-color: transparent;
   color: var(--primary-dark);
-}
-
-/* Responsive adjustments for mobile */
-@media (max-width: 768px) {
-  .site-header {
-    flex-direction: column;
-    gap: 15px;
-    padding: 20px;
-    align-items: flex-start;
-  }
-  .header-branding {
-    flex-direction: column;
-    gap: 5px;
-  }
-  .header-actions {
-    align-self: flex-end;
-    margin-top: -10px;
-  }
-  #dropdown-container {
-    align-self: flex-end;
-    margin-top: -40px;
-  }
 }
 
 .lang-switch {
@@ -211,8 +145,110 @@ a.menu-item {
   text-decoration: underline;
 }
 
+@media (max-width: 768px) {
+  .site-header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    align-items: flex-start;
+  }
+  .header-branding {
+    flex-direction: column;
+    gap: 5px;
+  }
+  .header-actions {
+    align-self: flex-end;
+    margin-top: -10px;
+  }
+  #dropdown-container {
+    align-self: flex-end;
+    margin-top: -40px;
+  }
+}
+
 /* =========================================
-   SECTIONS
+   MENU
+   ========================================= */
+#dropdown-container {
+  position: relative;
+  z-index: 1000;
+}
+#dropdown-trigger {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 8px 16px;
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: var(--transition);
+}
+#dropdown-trigger:hover {
+  background-color: var(--primary-light);
+}
+#menu-label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+}
+.dropdown-icon {
+  font-size: 0.8rem;
+}
+
+#dropdown-menu {
+  position: absolute;
+  top: 120%;
+  right: 0;
+  background-color: var(--card-bg);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  min-width: 180px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  opacity: 1;
+  transform: translateY(0);
+  transition: var(--transition);
+}
+#dropdown-menu.hidden {
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+}
+
+.menu-item {
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 0.95rem;
+  display: block;
+  text-decoration: none;
+  color: var(--text-dark);
+}
+.menu-sub-item {
+  padding: 5px 20px 5px 40px;
+  font-size: 0.85rem;
+  color: var(--text-light);
+  cursor: pointer;
+  display: block;
+  text-decoration: none;
+  transition: background-color 0.2s;
+  line-height: 1.4;
+}
+.menu-item:hover,
+.menu-sub-item:hover {
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
+}
+.menu-category {
+  font-weight: 600;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+  margin-top: 5px;
+}
+.menu-category:first-child {
+  margin-top: 0;
+}
+
+/* =========================================
+   SECTIONS & INPUTS
    ========================================= */
 .full-width-section {
   width: 100%;
@@ -221,11 +257,14 @@ a.menu-item {
   display: flex;
   justify-content: center;
 }
-
 .section-content {
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
+}
+/* Allow wider content for the 5-column charts */
+.wide-content {
+  max-width: 1400px !important;
 }
 
 .bg-cream {
@@ -252,113 +291,7 @@ a.menu-item {
   margin-bottom: 1rem;
 }
 
-.section-content a {
-  padding: 8px 12px;
-  background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 4px;
-  transition: var(--transition);
-}
-
-.section-content a:hover {
-  background-color: rgba(255, 255, 255, 0.5);
-  text-decoration: none;
-  color: var(--primary-color);
-}
-
-/* =========================================
-   MENU
-   ========================================= */
-
-#dropdown-container {
-  position: relative;
-  z-index: 1000;
-}
-
-#dropdown-trigger {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-  background-color: rgba(255, 255, 255, 0.5);
-  padding: 8px 16px;
-  border-radius: var(--border-radius);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  transition: var(--transition);
-}
-
-#dropdown-trigger:hover {
-  background-color: var(--primary-light);
-}
-#menu-label {
-  font-weight: 600;
-  font-size: 0.9rem;
-  letter-spacing: 1px;
-}
-.dropdown-icon {
-  font-size: 0.8rem;
-}
-
-#dropdown-menu {
-  position: absolute;
-  top: 120%;
-  right: 0;
-  background-color: var(--card-bg);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  min-width: 180px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  opacity: 1;
-  transform: translateY(0);
-  transition: var(--transition);
-}
-
-#dropdown-menu.hidden {
-  opacity: 0;
-  transform: translateY(-10px);
-  pointer-events: none;
-}
-
-/* Menu Item */
-.menu-item {
-  padding: 10px 20px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  font-size: 0.95rem;
-  display: block;
-  text-decoration: none;
-  color: var(--text-dark);
-}
-
-/* Sub-items */
-.menu-sub-item {
-  padding: 5px 20px 5px 40px;
-  font-size: 0.85rem;
-  color: var(--text-light);
-  cursor: pointer;
-  display: block;
-  text-decoration: none;
-  transition: background-color 0.2s;
-  line-height: 1.4;
-}
-
-.menu-item:hover,
-.menu-sub-item:hover {
-  background-color: var(--primary-light);
-  color: var(--primary-dark);
-}
-
-.menu-category {
-  font-weight: 600;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.03);
-  margin-top: 5px;
-}
-
-.menu-category:first-child {
-  margin-top: 0;
-}
-
-/* =========================================
-   INPUTS, FORMS & MATRIX
-   ========================================= */
+/* Inputs */
 .question {
   margin-bottom: 50px;
 }
@@ -409,6 +342,7 @@ a.menu-item {
   box-shadow: 0 0 0 4px rgba(76, 40, 46, 0.1);
 }
 
+/* Likert Matrix */
 .likert-matrix {
   display: grid;
   grid-template-columns: minmax(300px, 40%) repeat(5, 1fr);
@@ -477,21 +411,6 @@ a.menu-item {
   background-color: rgba(255, 107, 107, 0.1);
 }
 
-.nav-button {
-  padding: 18px 50px;
-  background-color: var(--primary-dark);
-  color: white;
-  border: none;
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: var(--transition);
-  margin-top: 20px;
-}
-.nav-button:hover {
-  background-color: var(--primary-color);
-  transform: translateY(-2px);
-}
-
 @media (max-width: 850px) {
   .likert-matrix {
     display: block;
@@ -525,40 +444,41 @@ a.menu-item {
   }
 }
 
+.nav-button {
+  padding: 18px 50px;
+  background-color: var(--primary-dark);
+  color: white;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: var(--transition);
+  margin-top: 20px;
+}
+.nav-button:hover {
+  background-color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
 /* =========================================
    CHART CONTAINERS & RESULTS LAYOUT
    ========================================= */
 
 /* 1. DEFAULT BEHAVIOR (For 'Your Results' Page) 
    --------------------------------------------
-   This applies when #charts-container is NOT inside #data-description.
-   It creates a 3-column grid for the individual user results.
+   Updated to use 5 Columns by default.
 */
 #charts-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(5, 1fr); /* 5 Columns Everywhere */
+  gap: 15px;
   width: 100%;
   box-sizing: border-box;
 }
 
-/* Responsive Grid for Your Results */
-@media (max-width: 1000px) {
-  #charts-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (max-width: 800px) {
-  #charts-container {
-    grid-template-columns: 1fr;
-  }
-}
-
 /* 2. SPECIFIC BEHAVIOR (For 'General Results' Page)
    -------------------------------------------------
-   This OVERRIDES the default above because of higher specificity.
-   It sets the main container to 'block' so the section titles 
-   can stack vertically. 
+   Overrides the grid so sections can stack vertically. 
+   Inside this, .charts-grid takes over.
 */
 #data-description #charts-container {
   display: block;
@@ -567,46 +487,49 @@ a.menu-item {
 
 /* 3. SUB-GRID (For 'General Results' Page)
    -----------------------------------------
-   The 'General Results' page creates inner divs with class .charts-grid.
-   These handle the 5-column layout for that specific page.
+   Matches the 5-column layout of the default container.
 */
-.wide-content {
-  max-width: 1400px !important;
-}
-
 .charts-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 5 Columns */
+  grid-template-columns: repeat(5, 1fr);
   gap: 15px;
   width: 100%;
   margin-bottom: 20px;
 }
 
-/* Responsive Sub-Grid (General Results) */
+/* 4. UNIFIED RESPONSIVENESS
+   -------------------------
+   Apply break points to both the main container and the sub-grid
+   so they behave identically on all screens.
+*/
 @media (max-width: 1200px) {
+  #charts-container,
   .charts-grid {
     grid-template-columns: repeat(4, 1fr);
   }
 }
 @media (max-width: 900px) {
+  #charts-container,
   .charts-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 @media (max-width: 600px) {
+  #charts-container,
   .charts-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 @media (max-width: 400px) {
+  #charts-container,
   .charts-grid {
     grid-template-columns: 1fr;
   }
 }
 
-/* 4. Chart Card Styling (Shared) */
+/* Chart Card Styling */
 .chart-wrapper {
-  background-color: #ffffff; /* Reverted to white for cleaner look */
+  background-color: #ffffff;
   padding: 10px;
   border-radius: var(--border-radius);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
@@ -616,17 +539,15 @@ a.menu-item {
   overflow: hidden;
   transition: transform 0.2s;
 }
-
 .chart-wrapper svg {
   max-width: 100%;
   height: auto;
 }
-
 .chart-wrapper:hover {
   transform: translateY(-3px);
 }
 
-/* 5. Section Titles (Shared or Specific to General) */
+/* Section Titles */
 .chart-section-title {
   font-family: "Playfair Display", serif;
   font-size: 1.8rem;
@@ -636,7 +557,6 @@ a.menu-item {
   padding-bottom: 10px;
   border-bottom: 2px solid rgba(0, 0, 0, 0.05);
 }
-
 .chart-section-title:first-child {
   margin-top: 0;
 }
@@ -644,8 +564,6 @@ a.menu-item {
 /* =========================================
    RESULTS PAGE: STATS & ANALYSIS
    ========================================= */
-
-/* Key Figures */
 .stats-grid {
   display: flex;
   justify-content: center;
@@ -653,7 +571,6 @@ a.menu-item {
   flex-wrap: wrap;
   margin-top: 30px;
 }
-
 .stat-box {
   background: white;
   padding: 40px;
@@ -663,7 +580,6 @@ a.menu-item {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
   border: 1px solid rgba(0, 0, 0, 0.05);
 }
-
 .stat-box h2 {
   font-family: "Playfair Display", serif;
   font-size: 3.5rem;
@@ -671,7 +587,6 @@ a.menu-item {
   margin-bottom: 5px;
   line-height: 1;
 }
-
 .stat-box p {
   color: var(--text-dark);
   font-weight: 600;
@@ -680,7 +595,7 @@ a.menu-item {
   letter-spacing: 1px;
 }
 
-/* Analysis Section */
+/* Analysis */
 .analysis-container {
   display: flex;
   flex-wrap: wrap;
@@ -688,7 +603,6 @@ a.menu-item {
   margin-top: 30px;
   align-items: flex-start;
 }
-
 .plot-box {
   flex: 1.5;
   min-width: 300px;
@@ -697,7 +611,6 @@ a.menu-item {
   border-radius: var(--border-radius);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
-
 .stats-column {
   flex: 1;
   min-width: 280px;
@@ -705,7 +618,6 @@ a.menu-item {
   flex-direction: column;
   gap: 20px;
 }
-
 .regression-table {
   width: 100%;
   border-collapse: collapse;
@@ -714,7 +626,6 @@ a.menu-item {
   overflow: hidden;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
-
 .regression-table th,
 .regression-table td {
   padding: 12px 15px;
@@ -722,7 +633,6 @@ a.menu-item {
   border-bottom: 1px solid #eee;
   font-size: 0.95rem;
 }
-
 .regression-table th {
   background-color: var(--primary-dark);
   color: white;
@@ -731,7 +641,6 @@ a.menu-item {
   font-size: 0.85rem;
   letter-spacing: 0.5px;
 }
-
 .regression-table tr:last-child td {
   border-bottom: none;
 }
@@ -743,13 +652,11 @@ a.menu-item {
   border-radius: 4px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
-
 .interpretation-box h4 {
   margin-bottom: 10px;
   color: var(--primary-dark);
   font-size: 1.1rem;
 }
-
 .interpretation-box p {
   font-size: 0.95rem;
   color: var(--text-light);
@@ -759,7 +666,6 @@ a.menu-item {
 /* =========================================
    FOOTER
    ========================================= */
-
 footer {
   background-color: var(--primary-light);
   padding: 10px;
@@ -769,14 +675,12 @@ footer {
   text-align: center;
   font-size: 0.8rem;
 }
-
 footer p.find-me {
   font-weight: 400;
   text-align: center;
   margin-bottom: 5px;
   font-size: 0.9rem;
 }
-
 footer ul {
   list-style: none;
   display: inline-flex;
@@ -784,11 +688,9 @@ footer ul {
   text-align: left;
   padding: 0;
 }
-
 footer li {
   margin-bottom: 5px;
 }
-
 footer a {
   padding: 8px 12px;
   background-color: rgba(255, 255, 255, 0.3);
@@ -797,7 +699,6 @@ footer a {
   text-decoration: none;
   color: inherit;
 }
-
 footer a:hover {
   background-color: rgba(255, 255, 255, 0.5);
   color: var(--primary-color);
