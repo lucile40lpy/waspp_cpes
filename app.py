@@ -37,5 +37,9 @@ def take_test():
 def results():
     return render_template('results.html')
 
+@app.route('/your_results')
+def your_results():
+    return render_template('your_results.html')
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", debug=True, port=5000)

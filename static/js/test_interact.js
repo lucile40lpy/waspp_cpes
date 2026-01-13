@@ -84,7 +84,7 @@ async function sendToSheet(data) {
     form.append(key, data[key]);
   }
 
-  // Get the URL dynamically here
+  // Get the URL dynamically
   const apiUrl = getSheetApiUrl();
 
   if (!apiUrl) {
@@ -97,22 +97,22 @@ async function sendToSheet(data) {
   }
 
   try {
-    // Send data to Google Sheets
+    // 1. Send data to Google Sheets
     await fetch(apiUrl, {
       method: "POST",
       body: form,
     });
 
-    // Success! Redirect to results page
-    if (window.flaskUrls && window.flaskUrls.results) {
-      window.location.href = window.flaskUrls.results;
+    // 2. Save user answers locally for highlighting on the next page
+    localStorage.setItem("wasppUserAnswers", JSON.stringify(data));
+
+    // 3. Redirect to the NEW "Your Results" page
+    if (window.flaskUrls && window.flaskUrls.your_results) {
+      window.location.href = window.flaskUrls.your_results;
     } else {
-      // Fallback only if the redirect URL is broken/missing
-      console.warn("Redirect URL not found in window.flaskUrls");
-      alert("Data sent successfully! (No result page configured)");
-      if (submitBtn) {
-        submitBtn.textContent = "Sent!";
-      }
+      // Fallback if the Flask URL isn't defined
+      console.warn("Redirect URL 'your_results' not found in window.flaskUrls");
+      window.location.href = "your_results.html";
     }
     return true;
   } catch (err) {

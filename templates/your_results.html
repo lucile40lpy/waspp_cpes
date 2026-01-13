@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WASPP - Your Results</title>
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="{{ url_for('static', filename='images/favicon.png') }}"
+    />
+    <script src="{{ url_for('static', filename='node_modules/d3/dist/d3.js') }}"></script>
+    <script
+      type="module"
+      src="{{ url_for('static', filename='js/your_results_interact.js') }}"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+
+    <script>
+      window.flaskUrls = {
+        home: "{{ url_for('home') }}",
+        take_test: "{{ url_for('take_test') }}",
+        results: "{{ url_for('results') }}",
+        your_results: "{{ url_for('your_results') }}",
+        sheetApiUrl: "{{ sheet_api_url | safe }}",
+      };
+    </script>
+  </head>
+
+  <body>
+    <header class="site-header">
+      <div class="header-branding">
+        <img
+          src="{{ url_for('static', filename='images/favicon.png') }}"
+          alt="Wasp Icon"
+          class="header-icon"
+        />
+        <div class="header-text">
+          <h1 class="main-title">WASPP</h1>
+          <p class="subtitle">What Are Student's Pedagogical Preferences?</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <a href="{{ url_for('take_test') }}" class="header-cta">Retake Test</a>
+        <div id="dropdown-container">
+          <div id="dropdown-trigger">
+            <span id="menu-label">MENU</span>
+            <span class="dropdown-icon">▼</span>
+          </div>
+          <div id="dropdown-menu" class="hidden">
+            <a href="{{ url_for('home') }}" class="menu-item menu-category"
+              >HOME</a
+            >
+            <a href="{{ url_for('take_test') }}" class="menu-item menu-category"
+              >TEST PAGE</a
+            >
+            <a href="{{ url_for('results') }}" class="menu-item menu-category"
+              >GENERAL RESULTS</a
+            >
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="full-width-section bg-cream">
+      <div class="section-content wide-content">
+        <h1>YOUR RESULTS</h1>
+        <p>Here is how your answers compare to the global dataset.</p>
+
+        <div
+          style="display: flex; gap: 20px; margin: 20px 0; font-size: 0.9rem"
+        >
+          <div style="display: flex; align-items: center; gap: 8px">
+            <span
+              style="
+                width: 15px;
+                height: 15px;
+                background-color: #f1c40f;
+                display: inline-block;
+              "
+            ></span>
+            <span>Your Answer</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px">
+            <span
+              style="
+                width: 15px;
+                height: 15px;
+                background-color: #4c282e;
+                display: inline-block;
+              "
+            ></span>
+            <span>Others</span>
+          </div>
+        </div>
+
+        <div id="charts-container">
+          <p id="loading-message">Loading data...</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
