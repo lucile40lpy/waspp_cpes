@@ -3,11 +3,12 @@
 document.addEventListener("DOMContentLoaded", async function () {
   setupMenu();
 
-  // 1. Get User Answers from Local Storage
+  // 1. Get User Answers (Saved from the test page)
   const stored = localStorage.getItem("wasppUserAnswers");
   const userAnswers = stored ? JSON.parse(stored) : null;
-  const apiUrl = window.flaskUrls ? window.flaskUrls.sheetApiUrl : null;
 
+  // 2. Fetch Global Data
+  const apiUrl = window.flaskUrls ? window.flaskUrls.sheetApiUrl : null;
   if (apiUrl) {
     try {
       const response = await fetch(apiUrl);
@@ -29,6 +30,7 @@ function generateCharts(data, userAnswers) {
   const container = d3.select("#charts-container");
   container.html("");
 
+  // Variables list (Including the new "Workload" variable)
   const variables = [
     { key: "clear-instructions", title: "Clear instructions" },
     { key: "grading-scale", title: "Grading scale provided" },
@@ -45,13 +47,13 @@ function generateCharts(data, userAnswers) {
   ];
 
   variables.forEach((v) => {
+    // Check if we have a user answer for this specific question
     const userVal = userAnswers ? String(userAnswers[v.key]) : null;
     createBarChart(container, data, v.key, v.title, userVal);
   });
 }
 
 function createBarChart(container, data, key, title, userVal) {
-  // Use ALL data points (N) for the chart
   const counts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
   data.forEach((row) => {
     const val = String(row[key]);
