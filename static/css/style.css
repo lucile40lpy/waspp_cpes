@@ -536,32 +536,40 @@ a.menu-item {
   RESULTS DISPLAY
   ========================================= */
 
-/* Results Grid Layout */
+/* =========================================
+   CHART CONTAINERS
+   ========================================= */
+
+/* 1. DEFAULT: Grid Layout (Used for 'Your Results' page) */
 #charts-container {
   display: grid;
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(450px, 1fr)
-  ); /* Wide enough for labels */
-  gap: 30px;
+  grid-template-columns: repeat(3, 1fr); /* Force 3 columns */
+  gap: 20px;
   width: 100%;
   box-sizing: border-box;
+}
+
+/* Responsive adjustments for the Grid */
+@media (max-width: 1000px) {
+  #charts-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  #charts-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+#data-description #charts-container {
+  display: block; /* Stacks the category sections vertically */
+  width: 100%;
 }
 
 /* Ensure SVG fits in the card */
 .chart-wrapper svg {
   max-width: 100%;
   height: auto;
-}
-
-/* Add to style.css */
-
-#charts-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Force 3 columns */
-  gap: 15px; /* Small gap to save space */
-  width: 100%;
-  box-sizing: border-box;
 }
 
 .chart-wrapper {
