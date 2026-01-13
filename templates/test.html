@@ -31,8 +31,15 @@
   <body>
     <header class="site-header">
       <div class="header-branding">
-        <h1 class="main-title">WASPP</h1>
-        <p class="subtitle">What Are Student's Pedagogical Preferences?</p>
+        <img
+          src="{{ url_for('static', filename='images/favicon.png') }}"
+          alt="Wasp Icon"
+          class="header-icon"
+        />
+        <div class="header-text">
+          <h1 class="main-title">WASPP</h1>
+          <p class="subtitle">What Are Student's Pedagogical Preferences?</p>
+        </div>
       </div>
 
       <div class="header-actions">
@@ -48,7 +55,6 @@
             <a href="{{ url_for('home') }}" class="menu-item menu-category"
               >HOME</a
             >
-
             <a href="{{ url_for('home') }}#discover-WASPP" class="menu-sub-item"
               >Discover</a
             >
@@ -69,7 +75,21 @@
             >
 
             <a href="{{ url_for('results') }}" class="menu-item menu-category"
-              >RESULTS PAGE</a
+              >GENERAL RESULTS</a
+            >
+            <a href="{{ url_for('results') }}#data-stats" class="menu-sub-item"
+              >Key Figures</a
+            >
+            <a
+              href="{{ url_for('results') }}#data-description"
+              class="menu-sub-item"
+              >Data Description</a
+            >
+            <a href="{{ url_for('results') }}#analysis" class="menu-sub-item"
+              >Analysis</a
+            >
+            <a href="{{ url_for('results') }}#limits" class="menu-sub-item"
+              >Limits & Future</a
             >
           </div>
         </div>
