@@ -53,7 +53,8 @@ const translations = {
       "I feel satisfied and positive about my overall academic experience.",
     q_knowledge:
       "The knowledge I acquire feels lasting and useful beyond exams.",
-    q_cheating: "I have used or considered using unauthorized help.",
+    q_cheating:
+      "I have cheated or considered using unauthorized help in a graded assignment.",
     q_interest:
       "I am generally interested in the program I'm in and the courses offered.",
     q_performance: "Getting good grades is important to me.",
@@ -178,7 +179,8 @@ const translations = {
       "Je me sens satisfait(e) et positif(ve) concernant mon expérience académique globale.",
     q_knowledge:
       "Les connaissances que j'acquiers me semblent durables et utiles au-delà des examens.",
-    q_cheating: "J'ai utilisé ou envisagé d'utiliser une aide non autorisée.",
+    q_cheating:
+      "J'ai utilisé ou envisagé de tricher ou d'utiliser une aide non autorisée pour un travail noté.",
     q_interest:
       "Je suis généralement intéressé(e) par le programme dans lequel je suis et les cours proposés.",
     q_performance: "Obtenir de bonnes notes est important pour moi.",
