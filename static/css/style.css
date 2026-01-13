@@ -602,30 +602,44 @@ a.menu-item {
 }
 
 /* --- 2. DATA DESCRIPTION (Wide Grid) --- */
+
+/* 1. Allow the section to be wide enough for 5 columns */
 .wide-content {
-  max-width: 1400px !important; /* Make it very wide to fit 5 cols */
+  max-width: 1400px !important;
 }
 
-/* New Class for multiple grids */
-.charts-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 5 Columns */
-  gap: 15px;
+/* 2. Main Container: RESET to block so sections stack vertically */
+#charts-container {
+  display: block; /* distinct from 'grid' or 'flex' */
   width: 100%;
-  margin-bottom: 50px; /* Space between sections */
 }
 
-/* Section Headers within the charts area */
+/* 3. Section Titles */
 .chart-section-title {
-  width: 100%;
-  font-size: 1.5rem;
+  font-family: "Playfair Display", serif;
+  font-size: 1.8rem;
   color: var(--primary-dark);
-  margin-top: 40px;
+  margin-top: 60px; /* Space above each new section */
   margin-bottom: 20px;
   padding-bottom: 10px;
   border-bottom: 2px solid rgba(0, 0, 0, 0.05);
 }
 
+/* Remove margin for the very first title */
+.chart-section-title:first-child {
+  margin-top: 0;
+}
+
+/* 4. The Grid for the Charts (5 items per row) */
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 Columns */
+  gap: 15px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* 5. Chart Card Styling */
 .chart-wrapper {
   background-color: #ffffff;
   padding: 10px;
@@ -635,24 +649,32 @@ a.menu-item {
   flex-direction: column;
   align-items: center;
   overflow: hidden;
+  transition: transform 0.2s; /* Optional: Nice hover effect */
 }
 
-/* Responsiveness */
+.chart-wrapper:hover {
+  transform: translateY(-3px);
+}
+
+/* --- Responsiveness (Adapts columns based on screen width) --- */
 @media (max-width: 1200px) {
   .charts-grid {
     grid-template-columns: repeat(4, 1fr);
   }
 }
+
 @media (max-width: 900px) {
   .charts-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
 @media (max-width: 600px) {
   .charts-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
 @media (max-width: 400px) {
   .charts-grid {
     grid-template-columns: 1fr;
