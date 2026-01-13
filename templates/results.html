@@ -3,12 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WASPP - Results</title>
+    <title>WASPP - General Results</title>
+
     <link
       rel="icon"
       type="image/png"
       href="{{ url_for('static', filename='images/favicon.png') }}"
     />
+
     <script src="{{ url_for('static', filename='node_modules/d3/dist/d3.js') }}"></script>
     <script
       type="module"
@@ -18,12 +20,13 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css') }}"
     />
+
     <script>
       window.flaskUrls = {
         home: "{{ url_for('home') }}",
         take_test: "{{ url_for('take_test') }}",
         results: "{{ url_for('results') }}",
-        sheetApiUrl: "{{ sheet_api_url | safe }}", // We need this to fetch data
+        sheetApiUrl: "{{ sheet_api_url | safe }}",
       };
     </script>
   </head>
@@ -31,12 +34,19 @@
   <body>
     <header class="site-header">
       <div class="header-branding">
-        <h1 class="main-title">WASPP</h1>
-        <p class="subtitle">What Are Student's Pedagogical Preferences?</p>
+        <img
+          src="{{ url_for('static', filename='images/favicon.png') }}"
+          alt="Wasp Icon"
+          class="header-icon"
+        />
+        <div class="header-text">
+          <h1 class="main-title">WASPP</h1>
+          <p class="subtitle">What Are Student's Pedagogical Preferences?</p>
+        </div>
       </div>
 
       <div class="header-actions">
-        <a href="{{ url_for('take_test') }}" class="header-cta">Start Test</a>
+        <a href="{{ url_for('take_test') }}" class="header-cta">Retake Test</a>
 
         <div id="dropdown-container">
           <div id="dropdown-trigger">
@@ -48,42 +58,137 @@
             <a href="{{ url_for('home') }}" class="menu-item menu-category"
               >HOME</a
             >
-            <a href="{{ url_for('home') }}#discover-WASPP" class="menu-sub-item"
-              >Discover</a
-            >
-            <a href="{{ url_for('home') }}#take-test" class="menu-sub-item"
-              >Test Section</a
-            >
-            <a
-              href="{{ url_for('home') }}#research-ground"
-              class="menu-sub-item"
-              >Research</a
-            >
-            <a href="{{ url_for('home') }}#about-project" class="menu-sub-item"
-              >About</a
-            >
+
             <a href="{{ url_for('take_test') }}" class="menu-item menu-category"
               >TEST PAGE</a
             >
-            <a href="{{ url_for('results') }}" class="menu-item menu-category"
-              >RESULTS PAGE</a
+
+            <div
+              class="menu-item menu-category"
+              onclick="scrollToSection('top')"
             >
+              GENERAL RESULTS
+            </div>
+            <div class="menu-sub-item" onclick="scrollToSection('data-stats')">
+              Key Figures
+            </div>
+            <div
+              class="menu-sub-item"
+              onclick="scrollToSection('data-description')"
+            >
+              Data Description
+            </div>
+            <div class="menu-sub-item" onclick="scrollToSection('analysis')">
+              Analysis
+            </div>
+            <div class="menu-sub-item" onclick="scrollToSection('limits')">
+              Limits & Future
+            </div>
           </div>
         </div>
       </div>
     </header>
 
-    <div class="full-width-section bg-purple">
-      <div class="section-content">
-        <h2>Global Results</h2>
-        <p>
-          Description of answers on the importance of certain pedagogical
-          aspects.
-        </p>
-        <div id="charts-container">
-          <p id="loading-message">Loading data...</p>
+    <main id="top">
+      <section id="data-stats" class="full-width-section bg-cream">
+        <div class="section-content">
+          <h1>KEY FIGURES</h1>
+          <p class="intro-text" style="text-align: center">
+            Overview of the dataset size and validity.
+          </p>
+
+          <div class="stats-grid">
+            <div class="stat-box">
+              <h2 id="total-n">-</h2>
+              <p>Total Responses (N)</p>
+            </div>
+            <div class="stat-box">
+              <h2 id="valid-n">-</h2>
+              <p>Complete Profiles (N')</p>
+              <span style="font-size: 0.8rem; color: #888"
+                >(Excluding optional fields)</span
+              >
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      </section>
+
+      <section id="data-description" class="full-width-section bg-purple">
+        <div class="section-content wide-content">
+          <h1>DATA DESCRIPTION</h1>
+          <p class="intro-text">
+            Distribution of answers for pedagogical preferences.
+          </p>
+
+          <div id="charts-container">
+            <p id="loading-message">Loading data from Google Sheets...</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="analysis" class="full-width-section bg-green">
+        <div class="section-content">
+          <h1>ANALYSIS</h1>
+          <p class="intro-text">
+            Regression Model: Interest ~ Economic Situation
+          </p>
+
+          <div class="analysis-container">
+            <div id="reg-plot" class="plot-box"></div>
+
+            <div class="stats-column">
+              <table class="regression-table">
+                <thead>
+                  <tr>
+                    <th>Metric</th>
+                    <th>Value</th>
+                  </tr>
+                </thead>
+                <tbody id="reg-table-body">
+                  <tr>
+                    <td colspan="2">Calculating...</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="interpretation-box">
+                <h4>Interpretation</h4>
+                <p id="reg-interpretation">Waiting for data...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="limits" class="full-width-section bg-cream">
+        <div class="section-content">
+          <h1>LIMITS & FUTURE ANALYSIS</h1>
+          <div
+            class="text-block"
+            style="
+              background: white;
+              padding: 30px;
+              border-radius: var(--border-radius);
+            "
+          >
+            <p>
+              <strong>Current Limitations:</strong><br />
+              The current dataset may suffer from selection bias, as respondents
+              are primarily drawn from the CPES/SMD cohort. Additionally,
+              self-reported metrics (like "Economic Situation") are subjective
+              and may not perfectly reflect reality.
+            </p>
+            <br />
+            <p>
+              <strong>Future Analysis:</strong><br />
+              Future iterations of this project will aim to cross-reference
+              "Pedagogical Preferences" with "Academic Performance" to see if
+              students who prefer specific teaching styles actually perform
+              better in those environments.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
   </body>
 </html>
