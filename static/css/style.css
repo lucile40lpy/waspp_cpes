@@ -1,4 +1,4 @@
-/* mypage_style.css - Updated for Banner Header */
+/* mypage_style.css - Corrected Chart Layouts */
 
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap");
@@ -55,11 +55,11 @@ body {
    ========================================= */
 /* Indented sub-items in the menu */
 .menu-sub-item {
-  padding: 10px 20px 10px 40px; /* 40px left padding creates indentation */
+  padding: 10px 20px 10px 40px;
   font-size: 0.9rem;
   color: var(--text-light);
   cursor: pointer;
-  display: block; /* Ensures anchor tags fill the width */
+  display: block;
   text-decoration: none;
   transition: background-color 0.2s;
 }
@@ -72,11 +72,11 @@ body {
 /* Bold the main categories */
 .menu-category {
   font-weight: 600;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* Optional separator */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .site-header {
-  position: fixed; /* Locks header to the viewport */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -85,11 +85,9 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(
-    --bg-cream
-  ); /* Ensure BG is opaque so content hides behind it */
+  background-color: var(--bg-cream);
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  z-index: 1000; /* Keeps it on top of everything */
+  z-index: 1000;
 }
 
 /* Push page content down so it's not hidden behind the fixed header */
@@ -99,30 +97,28 @@ body {
 
 .header-branding {
   display: flex;
-  align-items: center; /* Vertically centers the icon with the text block */
-  gap: 15px; /* Space between the wasp icon and the text */
+  align-items: center;
+  gap: 15px;
 }
 
 .header-icon {
-  height: 40px; /* Adjust size as needed */
-  width: auto; /* Maintains aspect ratio */
+  height: 40px;
+  width: auto;
 }
 
-/* Helper to stack Title and Subtitle vertically next to the icon */
 .header-text {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-/* Ensure title doesn't have huge margins pushing it away */
 .header-text h1 {
   line-height: 1;
   margin-bottom: 2px;
 }
 
 .header-text .subtitle {
-  font-size: 0.85rem; /* Slightly smaller to look neat under the title */
+  font-size: 0.85rem;
   color: var(--text-light);
 }
 
@@ -148,7 +144,7 @@ a.menu-item {
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 15px; /* Space between Start button and Menu */
+  gap: 15px;
 }
 
 /* "Start Test" Button Style in Header */
@@ -163,7 +159,7 @@ a.menu-item {
   border-radius: var(--border-radius);
   transition: var(--transition);
   border: 1px solid var(--primary-dark);
-  white-space: nowrap; /* Prevents text from wrapping */
+  white-space: nowrap;
 }
 
 .header-cta:hover {
@@ -198,7 +194,9 @@ a.menu-item {
   align-items: center;
   gap: 5px;
   margin-right: 15px;
-  color: var(--text-dark); /* Adjust to your theme */
+  color: var(--text-dark);
+  position: relative;
+  z-index: 2000;
 }
 .lang-btn {
   background: none;
@@ -272,7 +270,7 @@ a.menu-item {
    ========================================= */
 
 #dropdown-container {
-  position: relative; /* Now flows inside the header */
+  position: relative;
   z-index: 1000;
 }
 
@@ -302,14 +300,12 @@ a.menu-item {
 
 #dropdown-menu {
   position: absolute;
-  top: 120%; /* Pushes it just below the button */
+  top: 120%;
   right: 0;
   background-color: var(--card-bg);
   border: 1px solid rgba(0, 0, 0, 0.1);
   min-width: 180px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-
-  /* Animation */
   opacity: 1;
   transform: translateY(0);
   transition: var(--transition);
@@ -321,9 +317,9 @@ a.menu-item {
   pointer-events: none;
 }
 
-/* Menu Item (Main Links) - Reduced padding */
+/* Menu Item */
 .menu-item {
-  padding: 10px 20px; /* Reduced from 12px */
+  padding: 10px 20px;
   cursor: pointer;
   transition: background-color 0.2s;
   font-size: 0.95rem;
@@ -332,33 +328,30 @@ a.menu-item {
   color: var(--text-dark);
 }
 
-/* Sub-items - Tighter spacing */
+/* Sub-items */
 .menu-sub-item {
-  padding: 5px 20px 5px 40px; /* Reduced vertical padding (top/bottom) to 5px */
-  font-size: 0.85rem; /* Slightly smaller text */
+  padding: 5px 20px 5px 40px;
+  font-size: 0.85rem;
   color: var(--text-light);
   cursor: pointer;
   display: block;
   text-decoration: none;
   transition: background-color 0.2s;
-  line-height: 1.4; /* Ensures text lines don't feel too spaced out */
+  line-height: 1.4;
 }
 
-/* Hover effects */
 .menu-item:hover,
 .menu-sub-item:hover {
   background-color: var(--primary-light);
   color: var(--primary-dark);
 }
 
-/* Optional: Add a tiny separation between main categories */
 .menu-category {
   font-weight: 600;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.03); /* Faint separator line */
-  margin-top: 5px; /* Tiny space before a new category starts */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+  margin-top: 5px;
 }
 
-/* Remove margin from the first item so it aligns perfectly */
 .menu-category:first-child {
   margin-top: 0;
 }
@@ -532,73 +525,131 @@ a.menu-item {
   }
 }
 
-/*=========================================
-  RESULTS DISPLAY
-  ========================================= */
-
 /* =========================================
-   CHART CONTAINERS
+   CHART CONTAINERS & RESULTS LAYOUT
    ========================================= */
 
-/* 1. DEFAULT: Grid Layout (Used for 'Your Results' page) */
+/* 1. DEFAULT BEHAVIOR (For 'Your Results' Page) 
+   --------------------------------------------
+   This applies when #charts-container is NOT inside #data-description.
+   It creates a 3-column grid for the individual user results.
+*/
 #charts-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Force 3 columns */
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   width: 100%;
   box-sizing: border-box;
 }
 
-/* Responsive adjustments for the Grid */
+/* Responsive Grid for Your Results */
 @media (max-width: 1000px) {
   #charts-container {
     grid-template-columns: repeat(2, 1fr);
   }
 }
-@media (max-width: 600px) {
-  #charts-container {
-    grid-template-columns: 1fr;
-  }
-}
-
-#data-description #charts-container {
-  display: block; /* Stacks the category sections vertically */
-  width: 100%;
-}
-
-/* Ensure SVG fits in the card */
-.chart-wrapper svg {
-  max-width: 100%;
-  height: auto;
-}
-
-.chart-wrapper {
-  background-color: var(--primary-light);
-  padding: 10px; /* Reduced padding */
-  border-radius: var(--border-radius);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow: hidden;
-}
-
-/* Responsiveness: Go to 1 column on mobile */
 @media (max-width: 800px) {
   #charts-container {
     grid-template-columns: 1fr;
   }
 }
 
+/* 2. SPECIFIC BEHAVIOR (For 'General Results' Page)
+   -------------------------------------------------
+   This OVERRIDES the default above because of higher specificity.
+   It sets the main container to 'block' so the section titles 
+   can stack vertically. 
+*/
+#data-description #charts-container {
+  display: block;
+  width: 100%;
+}
+
+/* 3. SUB-GRID (For 'General Results' Page)
+   -----------------------------------------
+   The 'General Results' page creates inner divs with class .charts-grid.
+   These handle the 5-column layout for that specific page.
+*/
+.wide-content {
+  max-width: 1400px !important;
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 Columns */
+  gap: 15px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* Responsive Sub-Grid (General Results) */
+@media (max-width: 1200px) {
+  .charts-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (max-width: 900px) {
+  .charts-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .charts-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 400px) {
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 4. Chart Card Styling (Shared) */
+.chart-wrapper {
+  background-color: #ffffff; /* Reverted to white for cleaner look */
+  padding: 10px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  transition: transform 0.2s;
+}
+
+.chart-wrapper svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.chart-wrapper:hover {
+  transform: translateY(-3px);
+}
+
+/* 5. Section Titles (Shared or Specific to General) */
+.chart-section-title {
+  font-family: "Playfair Display", serif;
+  font-size: 1.8rem;
+  color: var(--primary-dark);
+  margin-top: 60px;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+}
+
+.chart-section-title:first-child {
+  margin-top: 0;
+}
+
 /* =========================================
-   RESULTS PAGE SPECIFIC STYLES
+   RESULTS PAGE: STATS & ANALYSIS
    ========================================= */
 
-/* --- 1. KEY FIGURES SECTION --- */
+/* Key Figures */
 .stats-grid {
   display: flex;
   justify-content: center;
-  gap: 40px; /* Space between boxes */
+  gap: 40px;
   flex-wrap: wrap;
   margin-top: 30px;
 }
@@ -629,87 +680,7 @@ a.menu-item {
   letter-spacing: 1px;
 }
 
-/* --- 2. DATA DESCRIPTION (Wide Grid) --- */
-
-/* 1. Allow the section to be wide enough for 5 columns */
-.wide-content {
-  max-width: 1400px !important;
-}
-
-/* 2. Main Container: RESET to block so sections stack vertically */
-#charts-container {
-  display: block; /* distinct from 'grid' or 'flex' */
-  width: 100%;
-}
-
-/* 3. Section Titles */
-.chart-section-title {
-  font-family: "Playfair Display", serif;
-  font-size: 1.8rem;
-  color: var(--primary-dark);
-  margin-top: 60px; /* Space above each new section */
-  margin-bottom: 20px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid rgba(0, 0, 0, 0.05);
-}
-
-/* Remove margin for the very first title */
-.chart-section-title:first-child {
-  margin-top: 0;
-}
-
-/* 4. The Grid for the Charts (5 items per row) */
-.charts-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 5 Columns */
-  gap: 15px;
-  width: 100%;
-  margin-bottom: 20px;
-}
-
-/* 5. Chart Card Styling */
-.chart-wrapper {
-  background-color: #ffffff;
-  padding: 10px;
-  border-radius: var(--border-radius);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow: hidden;
-  transition: transform 0.2s; /* Optional: Nice hover effect */
-}
-
-.chart-wrapper:hover {
-  transform: translateY(-3px);
-}
-
-/* --- Responsiveness (Adapts columns based on screen width) --- */
-@media (max-width: 1200px) {
-  .charts-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-@media (max-width: 900px) {
-  .charts-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 600px) {
-  .charts-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 400px) {
-  .charts-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* --- 3. ANALYSIS SECTION --- */
+/* Analysis Section */
 .analysis-container {
   display: flex;
   flex-wrap: wrap;
@@ -718,9 +689,8 @@ a.menu-item {
   align-items: flex-start;
 }
 
-/* Container for the D3 Regression Plot */
 .plot-box {
-  flex: 1.5; /* Takes up more space */
+  flex: 1.5;
   min-width: 300px;
   background: white;
   padding: 20px;
@@ -736,7 +706,6 @@ a.menu-item {
   gap: 20px;
 }
 
-/* Table Styling */
 .regression-table {
   width: 100%;
   border-collapse: collapse;
@@ -767,7 +736,6 @@ a.menu-item {
   border-bottom: none;
 }
 
-/* Interpretation Box */
 .interpretation-box {
   background: white;
   padding: 20px;
@@ -788,15 +756,14 @@ a.menu-item {
   font-style: italic;
 }
 
-/*=========================================
-  FOOTER
-  ========================================= */
+/* =========================================
+   FOOTER
+   ========================================= */
 
 footer {
   background-color: var(--primary-light);
   padding: 10px;
   margin-top: 10px;
-  margin-left: 10 px;
   color: var(--text-light);
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
@@ -815,6 +782,7 @@ footer ul {
   display: inline-flex;
   gap: 25px;
   text-align: left;
+  padding: 0;
 }
 
 footer li {
@@ -826,47 +794,11 @@ footer a {
   background-color: rgba(255, 255, 255, 0.3);
   border-radius: 4px;
   transition: var(--transition);
+  text-decoration: none;
+  color: inherit;
 }
 
 footer a:hover {
   background-color: rgba(255, 255, 255, 0.5);
-  text-decoration: none;
   color: var(--primary-color);
-}
-
-.cool-link {
-  background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 6px;
-  cursor: pointer;
-  transition: var(--transition);
-  text-align: left;
-  border: none;
-  color: inherit;
-}
-
-.cool-link:hover {
-  background-color: var(--primary-color);
-  color: var(--background-light);
-}
-
-.email-link {
-  transition: all 0.3s ease;
-  background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 6px;
-  cursor: pointer;
-  transition: var(--transition);
-  text-align: left;
-  border: none;
-  color: inherit;
-}
-
-.email-link:hover {
-  background-color: var(--primary-color);
-  color: var(--background-light);
-  text-decoration: none;
-}
-
-.email-link.copied {
-  background-color: rgba(89, 139, 123, 0.5) !important;
-  color: var(--text-dark);
 }
