@@ -226,7 +226,7 @@ a.menu-item {
   color: var(--primary-dark);
 }
 .section-content p.intro-text {
-  font-size: 1.1rem;
+  font-size: 0.8rem;
   color: var(--text-light);
   margin-bottom: 40px;
 }
