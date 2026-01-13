@@ -13,10 +13,16 @@ document.addEventListener("DOMContentLoaded", async function () {
       if (rawData && rawData.length > 0) {
         document.getElementById("loading-message").style.display = "none";
 
-        // 3. Process & Display Results
-        calculateKeyFigures(rawData);
-        generateAllCharts(rawData);
-        performRegression(rawData);
+        // --- Filter out "test" IDs ---
+        const cleanData = rawData.filter((row) => {
+          const id = String(row["anonymous-id"] || "").toLowerCase();
+          return !id.startsWith("test");
+        });
+
+        // Use 'cleanData' instead of 'rawData' for all functions
+        calculateKeyFigures(cleanData);
+        generateAllCharts(cleanData);
+        performRegression(cleanData);
       } else {
         document.getElementById("loading-message").textContent =
           "No data found.";

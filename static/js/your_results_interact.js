@@ -12,11 +12,19 @@ document.addEventListener("DOMContentLoaded", async function () {
   if (apiUrl) {
     try {
       const response = await fetch(apiUrl);
-      const data = await response.json();
+      const rawData = await response.json();
 
-      if (data && data.length > 0) {
+      if (rawData && rawData.length > 0) {
         document.getElementById("loading-message").style.display = "none";
-        generateCharts(data, userAnswers);
+
+        // --- Filter out "test" IDs ---
+        const cleanData = rawData.filter((row) => {
+          const id = String(row["anonymous-id"] || "").toLowerCase();
+          return !id.startsWith("test");
+        });
+
+        // Pass cleanData to the chart generator
+        generateCharts(cleanData, userAnswers);
       }
     } catch (error) {
       console.error(error);
