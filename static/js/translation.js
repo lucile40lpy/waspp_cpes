@@ -1,3 +1,5 @@
+"use strict";
+
 const translations = {
   en: {
     // General & Headers
@@ -349,3 +351,5 @@ function updateSelect(name, map) {
     if (map[opt.value]) opt.text = map[opt.value];
   });
 }
+
+window.setLanguage = setLanguage;

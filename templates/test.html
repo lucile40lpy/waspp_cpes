@@ -17,7 +17,6 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css') }}"
     />
-    <script src="{{ url_for('static', filename='js/translations.js') }}"></script>
     <script>
       window.flaskUrls = {
         home: "{{ url_for('home') }}",
@@ -1245,5 +1244,6 @@
         </div>
       </div>
     </form>
+    <script src="{{ url_for('static', filename='js/translations.js') }}"></script>
   </body>
 </html>
