@@ -551,6 +551,7 @@ t
   align-items: center;
   overflow: hidden;
   transition: transform 0.2s;
+  color: var(--text-dark);
 }
 
 .chart-wrapper svg {
