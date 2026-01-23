@@ -30,7 +30,7 @@ p {
 
   /* Text Colors */
   --text-dark: #0b0a0a; /* Black */
-  --text-light: #ffffff; /* White */
+  --text-light: #e7e7e7; /* White */
   --text-muted: #252525; /* Dark Grey (New: for subtitles on light backgrounds) */
 
   /* Backgrounds */
@@ -274,6 +274,10 @@ body {
 /* --- BG-COLOR 1 --- */
 .bg-color1 {
   background-color: var(--bg-color1);
+  color: var(--text-dark);
+}
+
+.bg-color1 .intro-block {
   color: var(--text-dark);
 }
 
