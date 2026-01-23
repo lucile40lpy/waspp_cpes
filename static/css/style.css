@@ -1,4 +1,4 @@
-/* mypage_style.css - 5 Charts Per Row Everywhere */
+/* mypage_style.css - Colors Updated */
 
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap");
@@ -27,13 +27,16 @@ p {
   --primary-color: #c47d73;
   --primary-dark: #4e2924;
   --primary-light: #f7e1df;
-  --text-dark: #0b0a0a;
-  --text-light: #ffffff;
+
+  /* Text Colors */
+  --text-dark: #0b0a0a; /* Black */
+  --text-light: #ffffff; /* White */
+  --text-muted: #2d2626; /* Dark Grey (New: for subtitles on light backgrounds) */
 
   /* Backgrounds */
-  --bg-color1: #fefae0;
-  --bg-color2: #606c38;
-  --bg-color3: #283618;
+  --bg-color1: #fefae0; /* Cream */
+  --bg-color2: #606c38; /* Olive */
+  --bg-color3: #283618; /* Dark Green */
   --card-bg: #ffffff;
 
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -63,7 +66,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--bg-color1);
+  background-color: var(--bg-color1); /* Cream Background */
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   z-index: 1000;
 }
@@ -94,8 +97,9 @@ body {
   letter-spacing: 1px;
 }
 .header-text .subtitle {
-  font-size: 0.85rem; /* Smaller font for subtitle */
-  color: var(--text-light);
+  font-size: 0.85rem;
+  /* CHANGED: Used muted instead of light (white), or it would be invisible on cream */
+  color: var(--text-muted);
   font-family: "Inter", sans-serif;
 }
 
@@ -139,6 +143,7 @@ body {
   font-weight: bold;
   opacity: 0.5;
   padding: 0;
+  color: var(--text-dark); /* Ensure buttons are dark */
 }
 .lang-btn.active {
   opacity: 1;
@@ -226,7 +231,7 @@ body {
 .menu-sub-item {
   padding: 5px 20px 5px 40px;
   font-size: 0.85rem;
-  color: var(--text-light);
+  color: var(--text-muted); /* Dark Grey */
   cursor: pointer;
   display: block;
   text-decoration: none;
@@ -248,7 +253,7 @@ body {
 }
 
 /* =========================================
-   SECTIONS & INPUTS
+   SECTIONS & COLORS
    ========================================= */
 .full-width-section {
   width: 100%;
@@ -262,36 +267,73 @@ body {
   max-width: 900px;
   margin: 0 auto;
 }
-/* Allow wider content for the 5-column charts */
 .wide-content {
   max-width: 1400px !important;
 }
 
+/* --- BG-COLOR 1 (Cream) --- */
 .bg-color1 {
   background-color: var(--bg-color1);
+  color: var(--text-dark);
 }
-.bg-color2 {
-  background-color: var(--bg-color2);
+/* Ensure headings on cream are dark (Brand Color) */
+.bg-color1 h2,
+.bg-color1 h3 {
+  color: var(--primary-dark);
 }
-.bg-color3 {
-  background-color: var(--bg-color3);
+.bg-color1 .intro-text {
+  color: var(--text-muted);
 }
 
+/* --- BG-COLOR 2 (Olive) --- */
+.bg-color2 {
+  background-color: var(--bg-color2);
+  color: var(--text-dark); /* As requested */
+}
+/* Ensure headings on olive are dark */
+.bg-color2 h2,
+.bg-color2 h3 {
+  color: var(--primary-dark);
+}
+.bg-color2 .intro-text {
+  color: var(--text-dark);
+}
+
+/* --- BG-COLOR 3 (Dark Green) --- */
+.bg-color3 {
+  background-color: var(--bg-color3);
+  color: var(--text-light); /* White */
+}
+/* FORCE headings to be white on dark green, overriding the default primary-dark */
+.bg-color3 h1,
+.bg-color3 h2,
+.bg-color3 h3,
+.bg-color3 h4,
+.bg-color3 p,
+.bg-color3 .intro-text,
+.bg-color3 li {
+  color: var(--text-light) !important;
+}
+
+/* Standard Section Spacing */
 .section-content h2 {
   font-size: 2.2rem;
   margin-bottom: 10px;
+  /* Default color, overridden by .bg-color3 rule above */
   color: var(--primary-dark);
 }
 .section-content p.intro-text {
   font-size: 0.8rem;
-  color: var(--text-light);
+  color: var(--text-muted); /* Default grey */
   margin-bottom: 40px;
 }
 .section-content p {
   margin-bottom: 1rem;
 }
 
-/* Inputs */
+/* =========================================
+   INPUTS
+   ========================================= */
 .question {
   margin-bottom: 50px;
 }
@@ -358,6 +400,9 @@ body {
 .likert-statement,
 .likert-choice {
   background-color: #ffffff;
+  color: var(
+    --text-dark
+  ); /* Ensure matrix text is always dark inside white boxes */
 }
 .likert-header {
   display: contents;
@@ -440,7 +485,7 @@ body {
   .likert-choice::after {
     content: attr(data-label);
     margin-left: 10px;
-    color: var(--text-light);
+    color: var(--text-muted);
   }
 }
 
@@ -462,33 +507,19 @@ body {
 /* =========================================
    CHART CONTAINERS & RESULTS LAYOUT
    ========================================= */
-
-/* 1. DEFAULT BEHAVIOR (For 'Your Results' Page) 
-   --------------------------------------------
-   Updated to use 5 Columns by default.
-*/
 #charts-container {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 5 Columns Everywhere */
+  grid-template-columns: repeat(5, 1fr);
   gap: 15px;
   width: 100%;
   box-sizing: border-box;
 }
 
-/* 2. SPECIFIC BEHAVIOR (For 'General Results' Page)
-   -------------------------------------------------
-   Overrides the grid so sections can stack vertically. 
-   Inside this, .charts-grid takes over.
-*/
 #data-description #charts-container {
   display: block;
   width: 100%;
 }
 
-/* 3. SUB-GRID (For 'General Results' Page)
-   -----------------------------------------
-   Matches the 5-column layout of the default container.
-*/
 .charts-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -497,11 +528,6 @@ body {
   margin-bottom: 20px;
 }
 
-/* 4. UNIFIED RESPONSIVENESS
-   -------------------------
-   Apply break points to both the main container and the sub-grid
-   so they behave identically on all screens.
-*/
 @media (max-width: 1200px) {
   #charts-container,
   .charts-grid {
@@ -539,6 +565,10 @@ body {
   overflow: hidden;
   transition: transform 0.2s;
 }
+/* Ensure chart titles are dark inside the white cards */
+.chart-wrapper h3 {
+  color: var(--text-dark) !important;
+}
 .chart-wrapper svg {
   max-width: 100%;
   height: auto;
@@ -547,15 +577,16 @@ body {
   transform: translateY(-3px);
 }
 
-/* Section Titles */
+/* Section Titles (Used in General Results) */
 .chart-section-title {
   font-family: "Playfair Display", serif;
   font-size: 1.8rem;
-  color: var(--primary-dark);
+  /* If this title is inside bg-color3, it needs to be white, otherwise dark */
+  color: inherit;
   margin-top: 60px;
   margin-bottom: 20px;
   padding-bottom: 10px;
-  border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
 }
 .chart-section-title:first-child {
   margin-top: 0;
@@ -595,7 +626,6 @@ body {
   letter-spacing: 1px;
 }
 
-/* Analysis */
 .analysis-container {
   display: flex;
   flex-wrap: wrap;
@@ -625,6 +655,7 @@ body {
   border-radius: var(--border-radius);
   overflow: hidden;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  color: var(--text-dark); /* Table is always dark text on white bg */
 }
 .regression-table th,
 .regression-table td {
@@ -651,6 +682,7 @@ body {
   border-left: 5px solid var(--primary-dark);
   border-radius: 4px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  color: var(--text-dark); /* Box is white, so text is dark */
 }
 .interpretation-box h4 {
   margin-bottom: 10px;
@@ -659,7 +691,7 @@ body {
 }
 .interpretation-box p {
   font-size: 0.95rem;
-  color: var(--text-light);
+  color: var(--text-muted);
   font-style: italic;
 }
 
@@ -667,10 +699,10 @@ body {
    FOOTER
    ========================================= */
 footer {
-  background-color: var(--primary-light);
+  background-color: var(--bg-color2); /* Olive background */
   padding: 10px;
   margin-top: 10px;
-  color: var(--text-light);
+  color: var(--text-dark); /* Dark text per request for bg-color2 */
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
   font-size: 0.8rem;
@@ -680,6 +712,7 @@ footer p.find-me {
   text-align: center;
   margin-bottom: 5px;
   font-size: 0.9rem;
+  color: var(--text-dark);
 }
 footer ul {
   list-style: none;
@@ -697,9 +730,9 @@ footer a {
   border-radius: 4px;
   transition: var(--transition);
   text-decoration: none;
-  color: inherit;
+  color: var(--text-dark);
 }
 footer a:hover {
   background-color: rgba(255, 255, 255, 0.5);
-  color: var(--primary-color);
+  color: var(--primary-dark);
 }
