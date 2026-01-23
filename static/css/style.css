@@ -3,25 +3,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap");
 
-/* Base Reset */
-h1,
-h2,
-h3,
-h4 {
-  font-family: "Playfair Display", serif;
-  font-weight: 500;
-  margin: 0;
-}
-h5,
-h6 {
-  font-family: "Inter", sans-serif;
-  font-weight: 400;
-  margin: 0;
-}
-p {
-  margin: 0;
-}
-
 :root {
   /* Brand Colors */
   --primary-color: #c47d73;
@@ -51,6 +32,29 @@ body {
   font-family: "Inter", sans-serif;
   color: var(--text-dark);
   line-height: 1.6;
+}
+
+/* Base Reset */
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Playfair Display", serif;
+  font-weight: 500;
+  margin: 0;
+}
+h5,
+h6 {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  margin: 0;
+}
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--primary-dark);
 }
 
 /* =========================================
