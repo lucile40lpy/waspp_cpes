@@ -31,7 +31,7 @@ p {
   /* Text Colors */
   --text-dark: #0b0a0a; /* Black */
   --text-light: #ffffff; /* White */
-  --text-muted: #2d2626; /* Dark Grey (New: for subtitles on light backgrounds) */
+  --text-muted: #252525; /* Dark Grey (New: for subtitles on light backgrounds) */
 
   /* Backgrounds */
   --bg-color1: #fefae0; /* Cream */
@@ -143,7 +143,7 @@ body {
   font-weight: bold;
   opacity: 0.5;
   padding: 0;
-  color: var(--text-dark); /* Ensure buttons are dark */
+  color: var(--text-muted); /* Ensure buttons are dark */
 }
 .lang-btn.active {
   opacity: 1;
@@ -271,40 +271,32 @@ body {
   max-width: 1400px !important;
 }
 
-/* --- BG-COLOR 1 (Cream) --- */
+/* --- BG-COLOR 1 --- */
 .bg-color1 {
   background-color: var(--bg-color1);
   color: var(--text-dark);
 }
-/* Ensure headings on cream are dark (Brand Color) */
-.bg-color1 h2,
-.bg-color1 h3 {
-  color: var(--primary-dark);
-}
+
 .bg-color1 .intro-text {
   color: var(--text-muted);
 }
 
-/* --- BG-COLOR 2 (Olive) --- */
+/* --- BG-COLOR 2 --- */
 .bg-color2 {
   background-color: var(--bg-color2);
-  color: var(--text-dark); /* As requested */
-}
-/* Ensure headings on olive are dark */
-.bg-color2 h2,
-.bg-color2 h3 {
-  color: var(--primary-dark);
-}
-.bg-color2 .intro-text {
   color: var(--text-dark);
+}
+
+.bg-color2 .intro-text {
+  color: var(--text-muted);
 }
 
 /* --- BG-COLOR 3 (Dark Green) --- */
 .bg-color3 {
   background-color: var(--bg-color3);
-  color: var(--text-light); /* White */
+  color: var(--text-light);
 }
-/* FORCE headings to be white on dark green, overriding the default primary-dark */
+
 .bg-color3 h1,
 .bg-color3 h2,
 .bg-color3 h3,
@@ -312,19 +304,17 @@ body {
 .bg-color3 p,
 .bg-color3 .intro-text,
 .bg-color3 li {
-  color: var(--text-light) !important;
+  color: var(--text-light);
 }
+t
 
 /* Standard Section Spacing */
 .section-content h2 {
   font-size: 2.2rem;
   margin-bottom: 10px;
-  /* Default color, overridden by .bg-color3 rule above */
-  color: var(--primary-dark);
 }
 .section-content p.intro-text {
   font-size: 0.8rem;
-  color: var(--text-muted); /* Default grey */
   margin-bottom: 40px;
 }
 .section-content p {
@@ -400,14 +390,11 @@ body {
 .likert-statement,
 .likert-choice {
   background-color: #ffffff;
-  color: var(
-    --text-dark
-  ); /* Ensure matrix text is always dark inside white boxes */
+  color: var(--text-muted);
 }
 .likert-header {
   display: contents;
   font-weight: 600;
-  color: var(--primary-dark);
 }
 .likert-header-label {
   padding: 20px 5px;
@@ -565,10 +552,7 @@ body {
   overflow: hidden;
   transition: transform 0.2s;
 }
-/* Ensure chart titles are dark inside the white cards */
-.chart-wrapper h3 {
-  color: var(--text-dark) !important;
-}
+
 .chart-wrapper svg {
   max-width: 100%;
   height: auto;
@@ -614,12 +598,10 @@ body {
 .stat-box h2 {
   font-family: "Playfair Display", serif;
   font-size: 3.5rem;
-  color: var(--primary-dark);
   margin-bottom: 5px;
   line-height: 1;
 }
 .stat-box p {
-  color: var(--text-dark);
   font-weight: 600;
   text-transform: uppercase;
   font-size: 0.9rem;
@@ -686,7 +668,6 @@ body {
 }
 .interpretation-box h4 {
   margin-bottom: 10px;
-  color: var(--primary-dark);
   font-size: 1.1rem;
 }
 .interpretation-box p {
@@ -699,7 +680,7 @@ body {
    FOOTER
    ========================================= */
 footer {
-  background-color: var(--bg-color2); /* Olive background */
+  background-color: var(--primary-light); /* Olive background */
   padding: 10px;
   margin-top: 10px;
   color: var(--text-dark); /* Dark text per request for bg-color2 */
@@ -712,7 +693,6 @@ footer p.find-me {
   text-align: center;
   margin-bottom: 5px;
   font-size: 0.9rem;
-  color: var(--text-dark);
 }
 footer ul {
   list-style: none;
