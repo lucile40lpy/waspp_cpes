@@ -285,6 +285,10 @@ body {
   color: var(--text-muted);
 }
 
+.bg-color1 li {
+  color: var(--text-dark);
+}
+
 /* --- BG-COLOR 2 --- */
 .bg-color2 {
   background-color: var(--bg-color2);
