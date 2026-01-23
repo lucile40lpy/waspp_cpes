@@ -34,9 +34,9 @@ p {
   --text-muted: #252525; /* Dark Grey (New: for subtitles on light backgrounds) */
 
   /* Backgrounds */
-  --bg-color1: #fefae0; /* Cream */
-  --bg-color2: #606c38; /* Olive */
-  --bg-color3: #283618; /* Dark Green */
+  --bg-color1: #ede9ca; /* Cream */
+  --bg-color2: #707d47; /* Olive */
+  --bg-color3: #364524; /* Dark Green */
   --card-bg: #ffffff;
 
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
