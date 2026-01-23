@@ -54,7 +54,7 @@ const translations = {
     q_knowledge:
       "The knowledge I acquire feels lasting and useful beyond exams.",
     q_cheating:
-      "I have cheated or considered using unauthorized help in a graded assignment.",
+      "I have cheated in a graded assignment or consider cheating in future assignments.",
     q_interest:
       "I am generally interested in the program I'm in and the courses offered.",
     q_performance: "Getting good grades is important to me.",
@@ -180,7 +180,7 @@ const translations = {
     q_knowledge:
       "Les connaissances que j'acquiers me semblent durables et utiles au-delà des examens.",
     q_cheating:
-      "J'ai utilisé ou envisagé de tricher ou d'utiliser une aide non autorisée pour un travail noté.",
+      "J'ai triché dans le cadre d'un devoir noté, ou j'envisage de tricher dans un futur devoir.",
     q_interest:
       "Je suis généralement intéressé(e) par le programme dans lequel je suis et les cours proposés.",
     q_performance: "Obtenir de bonnes notes est important pour moi.",
