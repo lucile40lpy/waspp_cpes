@@ -217,7 +217,7 @@ function createBarChart(container, data, key, title) {
       "viewBox",
       `0 0 ${width + margin.left + margin.right} ${
         height + margin.top + margin.bottom
-      }`
+      }`,
     )
     .style("width", "100%")
     .style("height", "auto")
@@ -271,13 +271,40 @@ function createBarChart(container, data, key, title) {
 // SECTION 3: ANALYSIS (REGRESSION)
 // ============================================================================
 
-function performRegression(data) {
-  // Variables: Interest (Y) ~ Economic Situation (X)
-  const points = [];
+// Helper: Student's t-distribution CDF approximation for p-value calculation
+function getTDistribution(t, df) {
+  const x = Math.abs(t);
+  const w = x / Math.sqrt(df);
+  const th = Math.atan(w);
+  if (df === 1) {
+    return 1 - th / (Math.PI / 2);
+  }
+  let s = Math.sin(th);
+  let c = Math.cos(th);
+  if (df % 2 === 1) {
+    return 1 - (th + s * c * statCom(c * c, 2, df - 3, -1)) / (Math.PI / 2);
+  } else {
+    return 1 - s * statCom(c * c, 1, df - 3, -1);
+  }
+}
 
+function statCom(q, i, j, b) {
+  let zz = 1;
+  let z = zz;
+  let k = i;
+  while (k <= j) {
+    zz = (zz * k * q) / (k + b);
+    z += zz;
+    k += 2;
+  }
+  return z;
+}
+
+function performRegression(data) {
+  // 1. Data Parsing
+  const points = [];
   data.forEach((d) => {
-    // Ensure we parse numbers correctly.
-    // Adjust keys if your sheet headers are different
+    // Make sure keys match your CSV/Sheet headers exactly
     const xVal = parseFloat(d["economic-situation"]);
     const yVal = parseFloat(d["interest"]);
 
@@ -286,72 +313,114 @@ function performRegression(data) {
     }
   });
 
-  // Need at least 2 points to make a line
-  if (points.length < 2) {
+  // Check for sufficient data
+  if (points.length < 3) {
+    // Need at least 3 points for valid p-value (df = n-2)
     const tbody = document.getElementById("reg-table-body");
     if (tbody)
-      tbody.innerHTML =
-        "<tr><td colspan='2'>Not enough data for regression</td></tr>";
+      tbody.innerHTML = "<tr><td colspan='2'>Not enough data</td></tr>";
     return;
   }
 
-  // Linear Regression Calculation (Least Squares Method)
+  // 2. Linear Regression (Least Squares)
   const n = points.length;
   const sumX = d3.sum(points, (d) => d.x);
   const sumY = d3.sum(points, (d) => d.y);
   const sumXY = d3.sum(points, (d) => d.x * d.y);
-  const sumXX = d3.sum(points, (d) => d.x * d.x);
-  const sumYY = d3.sum(points, (d) => d.y * d.y);
+  const sumXX = d3.sum(points, (d) => d.x * d.x); // Sum of X^2
+  const sumYY = d3.sum(points, (d) => d.y * d.y); // Sum of Y^2
 
+  // Slope (b1) & Intercept (b0)
   const slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
   const intercept = (sumY - slope * sumX) / n;
 
-  // Calculate R-Squared
+  // 3. R-Squared Calculation
+  // Total Sum of Squares (SStot)
   const ssTotal = sumYY - (sumY * sumY) / n;
+
+  // Residual Sum of Squares (SSres)
   const ssRes = d3.sum(points, (d) => {
     const yPred = slope * d.x + intercept;
     return Math.pow(d.y - yPred, 2);
   });
 
-  // R² is 1 - (SSres / SStotal). Guard against division by zero if all Y are same.
   const rSquared = ssTotal === 0 ? 0 : 1 - ssRes / ssTotal;
 
-  // Update Table
+  // 4. Significance (P-Value) Calculation
+  // Degrees of freedom
+  const df = n - 2;
+
+  // Variance of the residuals (Mean Square Error)
+  const mse = ssRes / df;
+
+  // Sum of squared differences for X (Sxx)
+  const sxx = sumXX - (sumX * sumX) / n;
+
+  // Standard Error of the Slope
+  const seSlope = Math.sqrt(mse / sxx);
+
+  // T-Statistic
+  const tStat = slope / seSlope;
+
+  // P-Value (2-tailed)
+  // We use the helper function getTDistribution here
+  const pValue = 1 - getTDistribution(Math.abs(tStat), df);
+
+  // 5. Update HTML Table
   const tbody = document.getElementById("reg-table-body");
   if (tbody) {
+    // Format p-value: if very small, show "< 0.001"
+    const pDisplay = pValue < 0.001 ? "< 0.001" : pValue.toFixed(3);
+
     tbody.innerHTML = `
-      <tr><td>Slope (Coefficient)</td><td>${slope.toFixed(3)}</td></tr>
+      <tr><td>Slope</td><td>${slope.toFixed(3)}</td></tr>
       <tr><td>Intercept</td><td>${intercept.toFixed(3)}</td></tr>
       <tr><td>R-Squared</td><td>${rSquared.toFixed(3)}</td></tr>
+      <tr><td>P-Value</td><td>${pDisplay}</td></tr>
       <tr><td>Sample Size (n)</td><td>${n}</td></tr>
     `;
   }
 
-  // Draw Regression Plot
-  drawRegPlot(points, slope, intercept);
+  // 6. Draw Plot (Assumes you have this function defined elsewhere)
+  if (typeof drawRegPlot === "function") {
+    drawRegPlot(points, slope, intercept);
+  }
 
-  // Interpretation Text
+  // 7. Interpretation Text
   const interpBox = document.getElementById("reg-interpretation");
   if (interpBox) {
     let text = "";
-    if (Math.abs(slope) < 0.1) {
+
+    // Direction
+    if (Math.abs(slope) < 0.05) {
+      // Threshold for "negligible" slope
       text =
-        "There is a negligible relationship between economic situation and program interest.";
+        "There is a negligible relationship between economic situation and interest.";
     } else if (slope > 0) {
       text =
-        "There is a positive relationship: as economic situation improves, interest in the program tends to increase.";
+        "There is a positive relationship: as economic situation improves, interest tends to increase.";
     } else {
       text =
-        "There is a negative relationship: as economic situation improves, interest in the program tends to decrease.";
+        "There is a negative relationship: as economic situation improves, interest tends to decrease.";
     }
-    // Add strength context based on R²
-    if (rSquared < 0.1) text += " However, the relationship is very weak.";
+
+    // Strength (R2)
+    if (rSquared < 0.1) text += " The relationship is very weak.";
     else if (rSquared > 0.5) text += " The relationship is quite strong.";
 
-    interpBox.textContent = text;
+    // Significance (P-Value)
+    // Common alpha level is 0.05
+    if (pValue < 0.05) {
+      text += ` <strong>The result is statistically significant (p = ${pDisplay}).</strong>`;
+    } else {
+      text += ` <strong>The result is not statistically significant (p = ${pDisplay}), meaning it could be due to chance.</strong>`;
+    }
+
+    interpBox.innerHTML = text; // Use innerHTML to support the <strong> tag
   }
 }
 
+// Graph : regplot
 function drawRegPlot(points, slope, intercept) {
   const container = d3.select("#reg-plot");
   container.html(""); // Clear placeholder
