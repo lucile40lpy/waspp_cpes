@@ -57,6 +57,10 @@ a {
   color: var(--primary-dark);
 }
 
+a:hover {
+  color: var(--primary-color);
+}
+
 /* =========================================
    HEADER BANNER
    ========================================= */
