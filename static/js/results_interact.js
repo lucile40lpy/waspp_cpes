@@ -271,35 +271,6 @@ function createBarChart(container, data, key, title) {
 // SECTION 3: ANALYSIS (REGRESSION)
 // ============================================================================
 
-// Helper: Student's t-distribution CDF approximation for p-value calculation
-function getTDistribution(t, df) {
-  const x = Math.abs(t);
-  const w = x / Math.sqrt(df);
-  const th = Math.atan(w);
-  if (df === 1) {
-    return 1 - th / (Math.PI / 2);
-  }
-  let s = Math.sin(th);
-  let c = Math.cos(th);
-  if (df % 2 === 1) {
-    return 1 - (th + s * c * statCom(c * c, 2, df - 3, -1)) / (Math.PI / 2);
-  } else {
-    return 1 - s * statCom(c * c, 1, df - 3, -1);
-  }
-}
-
-function statCom(q, i, j, b) {
-  let zz = 1;
-  let z = zz;
-  let k = i;
-  while (k <= j) {
-    zz = (zz * k * q) / (k + b);
-    z += zz;
-    k += 2;
-  }
-  return z;
-}
-
 function performRegression(data) {
   // 1. Data Parsing
   const points = [];
@@ -363,8 +334,7 @@ function performRegression(data) {
   const tStat = slope / seSlope;
 
   // P-Value (2-tailed)
-  // We use the helper function getTDistribution here
-  const pValue = 1 - getTDistribution(Math.abs(tStat), df);
+  const pValue = getTwoTailedPValue(tStat, df);
 
   // 5. Update HTML Table
   const tbody = document.getElementById("reg-table-body");
@@ -505,6 +475,90 @@ function drawRegPlot(points, slope, intercept) {
     .attr("stroke", "#e74c3c") // Red color for the line
     .attr("stroke-width", 2)
     .attr("d", line);
+}
+
+// ============================================================
+// SECTION 3bis : STATISTICS HELPER FUNCTIONS
+// ============================================================
+
+/**
+ * Calculates the two-tailed p-value for a t-statistic.
+ * Uses the Regularized Incomplete Beta function (Ix).
+ */
+function getTwoTailedPValue(t, df) {
+  const x = df / (df + t * t);
+  // The CDF of student-t is related to the incomplete beta function.
+  // P(|T| > t) = I_x(df/2, 0.5)
+  return incompleteBeta(df / 2, 0.5, x);
+}
+
+// Regularized Incomplete Beta Function I_x(a, b)
+function incompleteBeta(a, b, x) {
+  if (x === 0) return 0;
+  if (x === 1) return 1;
+
+  // Symmetry relation if x > (a + 1) / (a + b + 2)
+  if (x > (a + 1) / (a + b + 2)) {
+    return 1 - incompleteBeta(b, a, 1 - x);
+  }
+
+  const lbeta = logGamma(a) + logGamma(b) - logGamma(a + b);
+  const front = Math.exp(Math.log(x) * a + Math.log(1 - x) * b - lbeta) / a;
+
+  // Continued fraction (Lenz's method)
+  let f = 1.0,
+    c = 1.0,
+    d = 0.0;
+  let i, m;
+  const maxIter = 200;
+  const epsilon = 1.0e-10;
+
+  for (i = 0; i <= maxIter; i++) {
+    m = i / 2;
+    let numerator;
+    if (i === 0) {
+      numerator = 1;
+    } else if (i % 2 === 0) {
+      numerator = (m * (b - m) * x) / ((a + 2 * m - 1) * (a + 2 * m));
+    } else {
+      numerator =
+        -((a + m) * (a + b + m) * x) / ((a + 2 * m) * (a + 2 * m + 1));
+    }
+
+    d = 1.0 + numerator * d;
+    if (Math.abs(d) < 1.0e-30) d = 1.0e-30;
+
+    c = 1.0 + numerator / c;
+    if (Math.abs(c) < 1.0e-30) c = 1.0e-30;
+
+    d = 1.0 / d;
+    const delta = d * c;
+    f *= delta;
+
+    if (Math.abs(delta - 1.0) < epsilon) break;
+  }
+
+  return front * (f - 1.0);
+}
+
+// Log Gamma Function (Lanczos approximation)
+function logGamma(z) {
+  const c = [
+    0.99999999999980993, 676.5203681218851, -1259.1392167224028,
+    771.32342877765313, -176.61502916214059, 12.507343278686905,
+    -0.13857109526572012, 9.9843695780195716e-6, 1.5056327351493116e-7,
+  ];
+  let x = z;
+  let y = z;
+  let t = x + 7.5;
+  let sum = c[0];
+  t -= (x + 0.5) * Math.log(t);
+
+  for (let i = 1; i < c.length; i++) {
+    sum += c[i] / ++y;
+  }
+
+  return Math.log((2.5066282746310005 * sum) / x) - t;
 }
 
 // ============================================================================
