@@ -1,10 +1,7 @@
 "use strict";
 
 document.addEventListener("DOMContentLoaded", async function () {
-  // 1. Setup Menu
   setupMenu();
-
-  // 2. Fetch Data
   const apiUrl = window.flaskUrls ? window.flaskUrls.sheetApiUrl : null;
 
   if (apiUrl) {
@@ -13,13 +10,12 @@ document.addEventListener("DOMContentLoaded", async function () {
       if (rawData && rawData.length > 0) {
         document.getElementById("loading-message").style.display = "none";
 
-        // --- Filter out "test" IDs ---
+        // Filter out "test" IDs
         const cleanData = rawData.filter((row) => {
           const id = String(row["anonymous-id"] || "").toLowerCase();
           return !id.startsWith("test");
         });
 
-        // Use 'cleanData' instead of 'rawData' for all functions
         calculateKeyFigures(cleanData);
         generateAllCharts(cleanData);
         performRegression(cleanData);
@@ -33,51 +29,92 @@ document.addEventListener("DOMContentLoaded", async function () {
         "Error loading data.";
     }
   } else {
-    console.error("API URL not configured.");
     document.getElementById("loading-message").textContent =
       "Configuration Error.";
   }
 });
 
-// ============================================================================
-// DATA FETCHING
-// ============================================================================
+// Full Question Dictionary for Tooltips
+const questionMap = {
+  // Academic Behavior
+  "self-confidence":
+    "I feel confident in my ability to understand course material.",
+  stress:
+    "I frequently experience stress or anxiety related to my academic workload.",
+  absence: "I often miss classes.",
+  lateness: "I am often late to classes.",
+  "well-being":
+    "I feel satisfied and positive about my overall academic experience.",
+  "knowledge-durability":
+    "The knowledge I acquire feels lasting and useful beyond exams.",
+  cheating: "I have done .",
+  interest:
+    "I am generally interested in the program I'm in and the courses offered.",
+  performance: "Getting good grades is important to me.",
+  workload:
+    "I feel that my ability to produce quality work is hindered by my workload.",
+
+  // Personal Motivations
+  curiosity: "I like to discover new or original information.",
+  "explanation-seeking":
+    "I like to look for explanations for what is happening around me.",
+  "skill-acquisition": "I like to develop skills in various fields.",
+  play: "I like trying new ways of acting in situations with no pressure.",
+  "mental-time-travel":
+    "I like to think about the best action plans to implement.",
+  pride: "I like tackling challenges that require a high level of skill.",
+  shame: "I like being in situations where I don't risk being devalued.",
+  affiliation: "I like to surround myself with people I admire.",
+  friendship:
+    "I enjoy spending time nurturing the friendships that matter to me.",
+  reasoning:
+    "I like exchanging arguments to defend my ideas or evaluate those of others.",
+  "coalitional-affiliation":
+    "I like being a member of a group with a strong identity.",
+  "status-seeking":
+    "I like to take on responsibilities in the groups I belong to.",
+
+  // Pedagogical Preferences
+  "clear-instructions":
+    "It's important for me that the teacher provides clear instructions before evaluating.",
+  "grading-scale":
+    "It's important for me that the teacher provides a grading scale.",
+  "eval-content":
+    "It's important for me to be evaluated purely on the course content.",
+  resources:
+    "It's important for me to be given additional resources to able to dig further.",
+  practice:
+    "It's important for me that the course requires practicing what was taught.",
+  "limit-time": "It's important for me to produce assignments in limited time.",
+  feedback:
+    "It's important for me that the teacher provides personal feedback and annotations on my work.",
+  explanation:
+    "It's important for me that additional explanations for the class are provided after an assignment.",
+  correction:
+    "It's important for me that I'm asked to correct my mistakes after an evaluation.",
+  interaction:
+    "It's important for me to interact with other students when I'm working.",
+  "group-work": "It's important for me to work in groups.",
+};
 
 async function fetchData(url) {
   const response = await fetch(url);
-  const data = await response.json();
-  return data;
+  return await response.json();
 }
 
-// ============================================================================
-// SECTION 1: KEY FIGURES (N and N')
-// ============================================================================
-
 function calculateKeyFigures(data) {
-  // N: Total number of rows/responses
   const N = data.length;
-  const totalNElement = document.getElementById("total-n");
-  if (totalNElement) totalNElement.textContent = N;
+  const totalN = document.getElementById("total-n");
+  if (totalN) totalN.textContent = N;
 
-  // N': Number of "complete" profiles (no empty variables)
-  // We ignore specific optional fields: ID, study-tips, remarks-admin, timestamp
-  const ignoredFields = [
-    "timestamp",
-    "anonymous-id",
-    "study-tips",
-    "remarks-admin",
-  ];
-
+  const ignored = ["timestamp", "anonymous-id", "study-tips", "remarks-admin"];
   let validCount = 0;
 
   data.forEach((row) => {
     let isComplete = true;
     for (let key in row) {
-      // Skip the ignored fields
-      if (ignoredFields.includes(key)) continue;
-
-      // Check if value is essentially empty
-      if (row[key] === "" || row[key] === null || row[key] === undefined) {
+      if (ignored.includes(key)) continue;
+      if (row[key] === "" || row[key] == null) {
         isComplete = false;
         break;
       }
@@ -85,20 +122,22 @@ function calculateKeyFigures(data) {
     if (isComplete) validCount++;
   });
 
-  const validNElement = document.getElementById("valid-n");
-  if (validNElement) validNElement.textContent = validCount;
+  const validN = document.getElementById("valid-n");
+  if (validN) validN.textContent = validCount;
 }
-
-// ============================================================================
-// SECTION 2: DATA DESCRIPTION (CHARTS)
-// ============================================================================
 
 function generateAllCharts(data) {
   const mainContainer = d3.select("#charts-container");
-  mainContainer.html(""); // Clear previous content
+  mainContainer.html("");
 
-  // Define Groups
-  const chartSections = [
+  // Create Tooltip Div (Hidden by default)
+  const tooltip = d3
+    .select("body")
+    .append("div")
+    .attr("class", "chart-tooltip")
+    .style("opacity", 0);
+
+  const sections = [
     {
       title: "1. Academic Behavior",
       variables: [
@@ -149,82 +188,92 @@ function generateAllCharts(data) {
     },
   ];
 
-  // Loop through sections
-  chartSections.forEach((section) => {
-    // 1. Append Section Title
+  sections.forEach((section) => {
     mainContainer
       .append("h2")
       .attr("class", "chart-section-title")
       .text(section.title);
-
-    // 2. Append Grid Container for this section
     const gridDiv = mainContainer.append("div").attr("class", "charts-grid");
-
-    // 3. Generate Charts for this section
     section.variables.forEach((v) => {
-      createBarChart(gridDiv, data, v.key, v.title);
+      createBarChart(gridDiv, data, v.key, v.title, tooltip);
     });
   });
 }
 
-function createBarChart(container, data, key, title) {
-  // 1. Process Data
+function createBarChart(container, data, key, title, tooltip) {
+  // 1. Process Data & Calculate Stats
   const counts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+  const values = [];
 
   data.forEach((row) => {
-    const val = row[key];
-    const strVal = String(val);
-    if (counts[strVal] !== undefined) {
-      counts[strVal]++;
+    const val = parseInt(row[key]);
+    if (!isNaN(val) && val >= 1 && val <= 5) {
+      counts[val]++;
+      values.push(val);
     }
   });
+
+  const mean = d3.mean(values) || 0;
+  const median = d3.median(values) || 0;
+  const fullQuestion = questionMap[key] || title;
 
   const plotData = Object.keys(counts).map((k) => ({
     score: k,
     count: counts[k],
   }));
 
-  // Short labels for small 5-col charts
-  const labelMap = {
-    1: "Str. Disagree",
-    2: "Disagree",
-    3: "Neutral",
-    4: "Agree",
-    5: "Str. Agree",
-  };
+  // 2. Setup Chart
+  const margin = { top: 20, right: 10, bottom: 50, left: 30 };
+  const width = 200 - margin.left - margin.right;
+  const height = 180 - margin.top - margin.bottom;
 
-  // 2. Dimensions (Smaller for 5 columns)
-  const margin = { top: 15, right: 5, bottom: 60, left: 25 };
-  const width = 200 - margin.left - margin.right; // Narrower
-  const height = 160 - margin.top - margin.bottom; // Shorter
+  const chartWrapper = container
+    .append("div")
+    .attr("class", "chart-wrapper")
+    .style("position", "relative"); // For potential relative positioning
 
-  // 3. Wrapper
-  const chartDiv = container.append("div").attr("class", "chart-wrapper");
-
-  // Title
-  chartDiv
+  // Title (Forced Black)
+  chartWrapper
     .append("h3")
     .text(title)
-    .style("font-size", "0.75rem") // Smaller font
+    .style("font-size", "0.8rem")
     .style("text-align", "center")
-    .style("margin-bottom", "5px")
-    .style("min-height", "25px");
+    .style("margin-bottom", "10px")
+    .style("min-height", "30px")
+    .style("color", "black"); // Force black color
 
-  // 4. SVG
-  const svg = chartDiv
+  const svg = chartWrapper
     .append("svg")
     .attr(
       "viewBox",
-      `0 0 ${width + margin.left + margin.right} ${
-        height + margin.top + margin.bottom
-      }`,
+      `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`,
     )
     .style("width", "100%")
     .style("height", "auto")
     .append("g")
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
-  // 5. Scales
+  // 3. Tooltip Events on Wrapper
+  chartWrapper
+    .on("mousemove", function (event) {
+      tooltip.transition().duration(50).style("opacity", 1);
+      tooltip
+        .html(
+          `
+          <strong>${title}</strong><br/>
+          <em>"${fullQuestion}"</em><br/><br/>
+          <strong>Mean:</strong> ${mean.toFixed(2)}<br/>
+          <strong>Median:</strong> ${median}
+        `,
+        )
+        .style("left", event.pageX + 15 + "px")
+        .style("top", event.pageY - 20 + "px");
+    })
+    .on("mouseleave", function () {
+      tooltip.transition().duration(200).style("opacity", 0);
+    });
+
+  // 4. Scales
   const x = d3
     .scaleBand()
     .domain(["1", "2", "3", "4", "5"])
@@ -236,24 +285,39 @@ function createBarChart(container, data, key, title) {
     .domain([0, d3.max(plotData, (d) => d.count) || 5])
     .range([height, 0]);
 
-  // 6. Axes
-  svg
+  // 5. Axes with Custom Labels
+  const xAxis = d3
+    .axisBottom(x)
+    .tickValues(["1", "3", "5"]) // Only show 1, 3, 5
+    .tickSize(0); // Hide ticks for cleaner look
+
+  const gX = svg
     .append("g")
     .attr("transform", `translate(0,${height})`)
-    .call(d3.axisBottom(x).tickFormat((d) => labelMap[d]))
-    .selectAll("text")
-    .style("text-anchor", "end")
-    .attr("dx", "-.8em")
-    .attr("dy", ".15em")
-    .attr("transform", "rotate(-45)")
-    .style("font-size", "8px"); // Tiny font
+    .call(xAxis);
+
+  // Custom Multi-line Labels
+  gX.selectAll(".tick text")
+    .text(null) // Clear default text
+    .append("tspan")
+    .attr("x", 0)
+    .attr("dy", "1.2em")
+    .text((d) => (d === "1" ? "Strongly" : d === "3" ? "Neutral" : "Strongly"));
+
+  gX.selectAll(".tick text")
+    .append("tspan")
+    .attr("x", 0)
+    .attr("dy", "1.2em")
+    .text((d) => (d === "1" ? "Disagree" : d === "5" ? "Agree" : ""));
+
+  gX.selectAll("text").style("text-anchor", "middle").style("font-size", "9px");
 
   svg
     .append("g")
     .call(d3.axisLeft(y).ticks(3).tickFormat(d3.format("d")))
-    .style("font-size", "8px");
+    .style("font-size", "9px");
 
-  // 7. Bars
+  // 6. Bars
   svg
     .selectAll(".bar")
     .data(plotData)
@@ -264,7 +328,7 @@ function createBarChart(container, data, key, title) {
     .attr("y", (d) => y(d.count))
     .attr("width", x.bandwidth())
     .attr("height", (d) => height - y(d.count))
-    .attr("fill", "#4c282e");
+    .attr("fill", "#4c282e"); // Dark Red Brand Color
 }
 
 // ============================================================================
