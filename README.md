@@ -1,8 +1,8 @@
 # 2025-26_website_LL - WASPP (What Are Student's Pedagogical Preferences?)
 
-**WASPP** is a web application designed to collect and analyze data regarding the pedagogical preferences, academic habits, and personal motivations of students (specifically within the CPES/SMD cohort of PSL University).
+**WASPP** is a web application designed to collect and analyze data regarding the pedagogical preferences, academic habits, and personal motivations of students (specifically within the CPESMD cohort of PSL University).
 
-The platform features an interactive questionnaire, real-time data storage via Google Sheets, and dynamic data visualization using D3.js to compare individual results against the global dataset.
+The platform features an interactive questionnaire, data storage via Google Sheets, and data visualization using D3.js to compare individual results against the global dataset.
 
 Website link : https://two025-26-website-ll.onrender.com 
 
@@ -36,7 +36,7 @@ WASPP/
 ├── code.gs                 # Google Apps Script (for Google Sheet backend - *not available on Github*)
 ├── static/
 │   ├── css/
-│   │   └── style.css       # Main stylesheet
+│   │   └── style.css       # Stylesheet
 │   ├── js/
 │   │   ├── test_interact.js        # Form validation and submission logic
 │   │   ├── results_interact.js     # General results visualization & stats
